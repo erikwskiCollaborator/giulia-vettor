@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Image from "next/image";
 
 type HeroProps = {
   title?: string;
@@ -18,6 +19,7 @@ export default function Hero({
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const strengthRef = useRef(0.7); // gradient intensity
 
+  /*
   useEffect(() => {
     let raf = 0;
     let x = 50;
@@ -59,7 +61,7 @@ export default function Hero({
     raf = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(raf);
   }, []);
-
+  */
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -76,11 +78,11 @@ export default function Hero({
       setIsHovered(false);
       strengthRef.current = 0.7;
     };
-    el.addEventListener('mousemove', onMove);
-    el.addEventListener('mouseleave', onLeave);
+    el.addEventListener("mousemove", onMove);
+    el.addEventListener("mouseleave", onLeave);
     return () => {
-      el.removeEventListener('mousemove', onMove);
-      el.removeEventListener('mouseleave', onLeave);
+      el.removeEventListener("mousemove", onMove);
+      el.removeEventListener("mouseleave", onLeave);
     };
   }, []);
 
@@ -107,21 +109,45 @@ export default function Hero({
         } as React.CSSProperties
       }
     >
-      <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
-        <div className="relative grid items-center gap-12 lg:grid-cols-2">
+      <div className="mx-auto h-[100vh] flex items-center max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
+        <div className="relative grid items-center gap-12 lg:grid-cols-2 pb-32">
           {/* Content */}
           <div className="text-center lg:text-left text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]">
+            <Image
+              src="/images/white-logo.png"
+              alt="White Logo"
+              width={200} // fallback for SSR
+              height={100} // fallback for SSR
+              className="w-24 sm:w-32 md:w-40 lg:w-52 xl:w-64 h-auto mb-4"
+              priority
+            />
+            <h2 className="opacity-80 text-2xl font-bold tracking-tight sm:text-4xl">
+              Run your way,
+            </h2>
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
-              Run your way <br />
-              <span className="opacity-90">
-                Allenati con <span className="text-primary">ME-</span><span className="text-secondary">TODO</span>
+              Allenati con <br />
+              <span className="text-primary relative">
+                <span className="absolute left-0 top-0 text-white translate-x-[2px] translate-y-[7px] z-[-1] blur-[1px]">
+                  ME-
+                </span>
+                ME-
+              </span>
+              <span className="text-secondary relative">
+                <span className="absolute left-0 top-0 text-white translate-x-[2px] translate-y-[7px] z-[-1] blur-[1px]">
+                  TODO
+                </span>
+                TODO
               </span>
             </h1>
-            <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
+            <span className="block mt-10 text-lg">
+              È proprio quando hai paura di iniziare che è il momento di
+              alzarsi, ritrovare se stesse e riprendere in mano la propria vita.
+            </span>
+            <div className="mt-4 flex items-center justify-center gap-x-6 lg:justify-start">
               <button
                 type="button"
                 onClick={onCtaClick}
-                className="rounded-md bg-white/10 px-6 py-3 text-sm font-semibold text-white ring-1 ring-inset ring-white/30 backdrop-blur hover:bg-white/20"
+                className="rounded-md bg-white/10 px-10 py-4 text-md font-semibold text-white ring-1 ring-inset ring-white/30 backdrop-blur hover:bg-white/20"
               >
                 Inizia ora
               </button>
