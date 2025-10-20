@@ -5,9 +5,6 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-white">
       <Hero
-        title="Corri, Cresci, Vinci"
-        subtitle="Programmi su misura per performance e benessere."
-        ctaLabel="Inizia ora"
       />
 
       <div className="mx-auto max-w-2xl px-6 py-24 text-center">
