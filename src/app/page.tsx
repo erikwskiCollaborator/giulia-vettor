@@ -1,9 +1,16 @@
 import BuyButton from "@/components/BuyButton";
+import Hero from "@/components/Hero";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-white px-6 py-24">
-      <div className="max-w-2xl text-center">
+    <main className="min-h-screen bg-white">
+      <Hero
+        title="Corri, Cresci, Vinci"
+        subtitle="Programmi su misura per performance e benessere."
+        ctaLabel="Inizia ora"
+      />
+
+      <div className="mx-auto max-w-2xl px-6 py-24 text-center">
         <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
           Landing statica con pagamenti Stripe
         </h1>

@@ -1,14 +1,7 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 const stripePriceId = process.env.STRIPE_PRICE_ID;
-
-if (!stripeSecretKey) {
-  throw new Error('Missing STRIPE_SECRET_KEY environment variable');
-}
-
-const stripe = new Stripe(stripeSecretKey, { apiVersion: '2024-06-20' });
 
 export async function POST(request: Request) {
   try {
@@ -17,7 +10,10 @@ export async function POST(request: Request) {
 
     const baseUrl = origin.includes('http') ? origin : `${proto}://${origin}`;
 
-    const body = await request.json().catch(() => ({} as any));
+    const body = (await request.json().catch(() => ({} as Record<string, unknown>))) as {
+      priceId?: string;
+      quantity?: number;
+    };
     const priceId: string | undefined = body?.priceId || stripePriceId;
     const quantity: number = Math.max(1, Number(body?.quantity) || 1);
 
@@ -27,6 +23,15 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+    if (!stripeSecretKey) {
+      return NextResponse.json(
+        { error: 'Missing STRIPE_SECRET_KEY. Add it to your environment.' },
+        { status: 500 }
+      );
+    }
+    const stripe = new Stripe(stripeSecretKey);
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
