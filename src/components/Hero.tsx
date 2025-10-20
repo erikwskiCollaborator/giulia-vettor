@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from "next/image";
+import ScrollingWords from "./ScrollingWords";
 
 type HeroProps = {
   title?: string;
@@ -19,7 +20,7 @@ export default function Hero({
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const strengthRef = useRef(0.7); // gradient intensity
 
-  /*
+  
   useEffect(() => {
     let raf = 0;
     let x = 50;
@@ -61,7 +62,7 @@ export default function Hero({
     raf = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(raf);
   }, []);
-  */
+  
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -109,7 +110,26 @@ export default function Hero({
         } as React.CSSProperties
       }
     >
-      <div className="mx-auto h-[100vh] flex items-center max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
+      {/* Top marquee */}
+      <ScrollingWords
+        words={[
+          "corsa",
+          "running",
+          "respiro",
+          "energia",
+          "forza",
+          "benessere",
+          "focus",
+          "ritmo",
+          "movimento",
+          "equilibrio",
+          "performance",
+        ]}
+        direction="left"
+        speedSeconds={40}
+        className="absolute top-0 left-0 h-24 flex items-center text-white/10 text-[4rem] md:text-[5.5rem] font-extrabold"
+      />
+      <div className="mx-auto min-h-[100vh] flex items-center max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
         <div className="relative grid items-center gap-12 lg:grid-cols-2 pb-32">
           {/* Content */}
           <div className="text-center lg:text-left text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]">
@@ -118,7 +138,7 @@ export default function Hero({
               alt="White Logo"
               width={200} // fallback for SSR
               height={100} // fallback for SSR
-              className="w-24 sm:w-32 md:w-40 lg:w-52 xl:w-64 h-auto mb-4"
+              className="w-32 md:w-52 lg:w-60 xl:w-64 h-auto mb-6 mx-auto lg:mx-0"
               priority
             />
             <h2 className="opacity-80 text-2xl font-bold tracking-tight sm:text-4xl">
@@ -139,7 +159,7 @@ export default function Hero({
                 TODO
               </span>
             </h1>
-            <span className="block mt-10 text-lg">
+            <span className="block mt-10 md:text-lg">
               È proprio quando hai paura di iniziare che è il momento di
               alzarsi, ritrovare se stesse e riprendere in mano la propria vita.
             </span>
@@ -155,15 +175,23 @@ export default function Hero({
           </div>
 
           {/* Transparent photo placeholder (no src set yet) */}
-          <div className="relative flex items-center justify-center">
+          <div className="relative flex items-center justify-center mt-8 lg:mt-0">
             <div
               aria-label="Foto atleta"
               role="img"
-              className="h-[420px] w-[300px] rounded-[28px] border border-white/30 bg-transparent shadow-2xl shadow-black/30 ring-1 ring-white/20"
+              className="h-[300px] w-[250px] lg:h-[420px] lg:w-[300px] rounded-[28px] border border-white/30 bg-transparent shadow-2xl shadow-black/30 ring-1 ring-white/20"
               style={{
                 background: "transparent",
                 backdropFilter: "saturate(120%)",
               }}
+            />
+            <Image
+              src="/images/hero-image.png"
+              alt="Hero Image"
+              width={200} // fallback for SSR
+              height={100} // fallback for SSR
+              className="absolute top-[-25%] h-[150%]  w-auto mb-6"
+              priority
             />
           </div>
         </div>
@@ -184,6 +212,26 @@ export default function Hero({
           </div>
         </div>
       )}
+
+      {/* Bottom marquee */}
+      <ScrollingWords
+        words={[
+          "grinta",
+          "passi",
+          "resistenza",
+          "motivazione",
+          "endurance",
+          "velocità",
+          "core",
+          "fiducia",
+          "sorriso",
+          "sfida",
+          "crescita",
+        ]}
+        direction="right"
+        speedSeconds={36}
+        className="absolute bottom-0 left-0 h-24 flex items-center text-white/10 text-[4rem] md:text-[5.5rem] font-extrabold"
+      />
     </section>
   );
 }
