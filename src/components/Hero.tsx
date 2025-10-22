@@ -156,14 +156,14 @@ export default function Hero({
             </h2>
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
               Allenati con <br />
-              <span className="text-primary relative">
-                <span className="absolute left-0 top-0 text-white translate-x-[2px] translate-y-[7px] z-[-1] blur-[1px]">
-                  ME-
+              <span className="text-white relative">
+                <span className="absolute left-[2px] top-[4px] sm:left-[5px] sm:top-[10px] text-primary z-[-1]">
+                  ME
                 </span>
-                ME-
+                ME
               </span>
-              <span className="text-secondary relative">
-                <span className="absolute left-0 top-0 text-white translate-x-[2px] translate-y-[7px] z-[-1] blur-[1px]">
+              <span className="text-white relative ml-1">
+                <span className="absolute left-[2px] top-[4px] sm:left-[4px] sm:top-[8px] text-secondary z-[-1]">
                   TODO
                 </span>
                 TODO
