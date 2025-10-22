@@ -1,3 +1,5 @@
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -82,14 +84,20 @@ export default function Footer() {
               <h3 className="text-lg font-bold mb-4">Link Utili</h3>
               <ul className="space-y-2 text-sm text-white/80">
                 <li>
-                  <Link href="#about" className="hover:text-secondary transition-colors">
+                  <button 
+                    onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="hover:text-secondary transition-colors text-left"
+                  >
                     Chi Sono
-                  </Link>
+                  </button>
                 </li>
                 <li>
-                  <Link href="#packages" className="hover:text-secondary transition-colors">
+                  <button 
+                    onClick={() => document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="hover:text-secondary transition-colors text-left"
+                  >
                     Pacchetti
-                  </Link>
+                  </button>
                 </li>
                 <li>
                   <Link href="/privacy" className="hover:text-secondary transition-colors">

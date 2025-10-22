@@ -70,7 +70,7 @@ type PackagesProps = {
 
 export default function Packages({ onPackageSelect }: PackagesProps) {
   return (
-    <section className="relative bg-gradient-to-b from-white to-gray-50 py-16 sm:py-24">
+    <section id="packages" className="relative bg-gradient-to-b from-white to-gray-50 py-16 sm:py-24">
       <div className="mx-auto max-w-[92rem] px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">

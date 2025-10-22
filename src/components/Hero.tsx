@@ -166,7 +166,10 @@ export default function Hero({
             </span>
             <div className="mt-4 flex items-center justify-center gap-x-6 lg:justify-start">
               <Button 
-                onClick={onCtaClick} 
+                onClick={() => {
+                  document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+                  onCtaClick?.();
+                }} 
                 size="xl" 
                 variant="outline"
                 onMouseEnter={() => setIsHoveringButton(true)}

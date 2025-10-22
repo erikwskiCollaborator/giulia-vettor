@@ -9,7 +9,7 @@ type AboutProps = {
 
 export default function About({ onCtaClick }: AboutProps) {
   return (
-    <section className="relative isolate overflow-visible">
+    <section id="about" className="relative isolate overflow-visible">
       {/* Prima sezione - Sfondo bianco */}
       <div className="bg-white relative z-10">
         <div className="mx-auto max-w-7xl px-6 pt-16 sm:pt-24 lg:px-8">
@@ -145,7 +145,14 @@ export default function About({ onCtaClick }: AboutProps) {
               </p>
 
               <div className="pt-4">
-                <Button onClick={onCtaClick} size="l" variant="outline">
+                <Button 
+                  onClick={() => {
+                    document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' });
+                    onCtaClick?.();
+                  }} 
+                  size="l" 
+                  variant="outline"
+                >
                   RICOMINCIA DA TE
                 </Button>
               </div>
