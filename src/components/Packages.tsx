@@ -49,7 +49,7 @@ const packages: Package[] = [
       '1 circuito di forza personalizzato',
       '1 call iniziale + 4 feedback su richiesta*',
     ],
-    note: '* I feedback su richiesta offrono assistenza e conferma quando il cliente lo richiede esplicitamente.',
+    note: '* I feedback su richiesta offrono assistenza e conferma quando vengono richiesti esplicitamente.',
   },
   {
     id: 'consulenza',

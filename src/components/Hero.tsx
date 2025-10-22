@@ -162,7 +162,7 @@ export default function Hero({
             </h1>
             <span className="block mt-10 md:text-lg">
               È proprio quando hai paura di iniziare che è il momento di
-              alzarsi, ritrovare se stesse e riprendere in mano la propria vita.
+              alzarsi, ritrovare te stessə e riprendere in mano la tua vita.
             </span>
             <div className="mt-4 flex items-center justify-center gap-x-6 lg:justify-start">
               <Button 

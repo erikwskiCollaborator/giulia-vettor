@@ -85,7 +85,7 @@ export default function About({ onCtaClick }: AboutProps) {
                 </div>
                 <div className="text-[0.65rem] text-gray-700 text-start leading-tight space-y-1">
                   <p className="font-semibold text-primary text-right">
-                    Istruttrice FIDAL
+                    Coach FIDAL
                   </p>
                   <div>
                     <span className="font-semibold text-secondary">
@@ -133,7 +133,7 @@ export default function About({ onCtaClick }: AboutProps) {
               </h2>
 
               <p className="text-base sm:text-lg leading-relaxed opacity-90 font-medium">
-                Sono <strong>Istruttrice FIDAL</strong> e <strong>allenatrice da oltre 10 anni</strong>, con tre lauree in Scienze Motorie, Scienze Pedagogiche e Scienze dell&apos;Educazione. Corro e gareggio sia su pista che su strada, vivendo in prima persona ogni aspetto della corsa.
+                Sono <strong>Coach FIDAL</strong> con <strong>oltre 10 anni di esperienza</strong>, con tre lauree in Scienze Motorie, Scienze Pedagogiche e Scienze dell&apos;Educazione. Corro e gareggio sia su pista che su strada, vivendo in prima persona ogni aspetto della corsa.
               </p>
 
               <p className="text-sm sm:text-base leading-relaxed opacity-90">
@@ -153,7 +153,7 @@ export default function About({ onCtaClick }: AboutProps) {
               {/* Citazione in basso */}
               <div className="pt-8">
                 <p className="text-xs sm:text-sm italic opacity-70 leading-relaxed">
-                  &ldquo;La corsa è libertà, è scoperta, è miglioramento continuo. È il viaggio verso la versione migliore di te stesso.&rdquo;
+                  &ldquo;La corsa è libertà, è scoperta, è miglioramento continuo. È il viaggio verso la versione migliore di te stessə.&rdquo;
                 </p>
               </div>
             </div>

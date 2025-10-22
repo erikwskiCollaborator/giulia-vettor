@@ -19,12 +19,12 @@ export default function CallToAction({ onCtaClick }: CallToActionProps) {
           {/* Content */}
           <div className="text-white">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
-              <span className="text-white">ANCORA </span>
-              <span className="text-secondary">INDECISA?</span>
+              <span className="text-white">HAI ANCORA </span>
+              <span className="text-secondary">DUBBI?</span>
             </h2>
             
             <p className="text-base sm:text-lg leading-relaxed opacity-90 mb-8">
-              Nessun problema. Non devi essere un&apos;esperta in tutto questo — è il nostro lavoro! Ci piace chattare con te e aiutarti a capire le tue migliori opzioni. Le nostre consulenze gratuite sono veloci e completamente senza pressioni.
+              Nessun problema. Non serve essere espertə in tutto questo — è il mio lavoro! Chattiamo assieme e aiutiamoci a capire le migliori opzioni per te. Le consulenze gratuite sono veloci e completamente senza pressioni.
             </p>
 
             <Button 
