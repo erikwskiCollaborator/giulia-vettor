@@ -87,7 +87,7 @@ export default function About({ onCtaClick }: AboutProps) {
                   <p className="font-semibold text-primary text-right">
                     Istruttrice FIDAL
                   </p>
-                  <p>
+                  <div>
                     <span className="font-semibold text-secondary">
                       Laurea in:{" "}
                     </span>
@@ -96,7 +96,7 @@ export default function About({ onCtaClick }: AboutProps) {
                       <li>Scienze pedagogiche</li>
                       <li>Scienze dell&apos;educazione</li>
                     </ul>
-                  </p>
+                  </div>
                 </div>
               </div>
             </div>
