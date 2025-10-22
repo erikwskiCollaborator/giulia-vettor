@@ -28,34 +28,40 @@ export default function Hero({
     let y = 50;
 
     const animate = () => {
-      // Looping idle motion that always runs
+      // Looping idle motion that always runs - FASTER animation
       const now = Date.now();
-      // Angular position: full 360° in 5 seconds
-      const secondsPerRevolution = 5;
+      // Angular position: full 360° in 3 seconds (was 5)
+      const secondsPerRevolution = 3;
       const omega = (Math.PI * 2) / secondsPerRevolution; // rad/s
       const t = now * 0.001; // seconds
       const theta = t * omega;
 
-      // Ellipse radii to let blobs sweep and divide horizontally
-      const radiusX = 35; // reach near left/right thirds
-      const radiusY = 22;
+      // Ellipse radii to let blobs sweep and divide horizontally - LARGER movement
+      const radiusX = 45; // increased from 35
+      const radiusY = 30; // increased from 22
       const rotX = 50 + Math.cos(theta) * radiusX;
       const rotY = 50 + Math.sin(theta) * radiusY;
 
-      // Ease current blob center towards rotation position
-      x += (rotX - x) * 0.07;
-      y += (rotY - y) * 0.07;
+      // Ease current blob center towards rotation position - FASTER easing
+      x += (rotX - x) * 0.12; // increased from 0.07
+      y += (rotY - y) * 0.12;
 
       const el = containerRef.current;
       if (el) {
         // Secondary blob rotates opposite (180° phase)
         const x2 = 50 + Math.cos(theta + Math.PI) * radiusX;
         const y2 = 50 + Math.sin(theta + Math.PI) * radiusY;
+        
+        // Third blob with different phase for more complexity
+        const x3 = 50 + Math.cos(theta + Math.PI * 0.5) * radiusX * 0.8;
+        const y3 = 50 + Math.sin(theta + Math.PI * 0.5) * radiusY * 0.8;
 
         el.style.setProperty('--gx1', `${x}%`);
         el.style.setProperty('--gy1', `${y}%`);
         el.style.setProperty('--gx2', `${x2}%`);
         el.style.setProperty('--gy2', `${y2}%`);
+        el.style.setProperty('--gx3', `${x3}%`);
+        el.style.setProperty('--gy3', `${y3}%`);
         el.style.setProperty('--gstrength', `${strengthRef.current}`);
       }
       raf = requestAnimationFrame(animate);
@@ -102,11 +108,14 @@ export default function Hero({
           "--gy1": "30%",
           "--gx2": "70%",
           "--gy2": "65%",
+          "--gx3": "50%",
+          "--gy3": "50%",
           "--gstrength": 0.7,
           background:
             // brand colors: #543585 (primary viola) dominant, #BE418C (magenta) accent
             "radial-gradient(42% 54% at var(--gx1) var(--gy1), rgba(84, 53, 133, calc(0.60*var(--gstrength))) 0%, rgba(84, 53, 133, 0) 60%), " +
             "radial-gradient(46% 60% at var(--gx2) var(--gy2), rgba(190, 65, 140, calc(0.35*var(--gstrength))) 0%, rgba(190, 65, 140, 0) 62%), " +
+            "radial-gradient(40% 50% at var(--gx3) var(--gy3), rgba(155, 89, 182, calc(0.30*var(--gstrength))) 0%, rgba(155, 89, 182, 0) 65%), " +
             "linear-gradient(180deg, #543585 0%, #5c3a90 40%, #BE418C 100%)",
         } as React.CSSProperties
       }
@@ -127,7 +136,7 @@ export default function Hero({
           "performance",
         ]}
         direction="left"
-        speedSeconds={40}
+        speedSeconds={25}
         className="absolute top-0 left-0 h-24 flex items-center text-white/10 text-[4rem] md:text-[5.5rem] font-extrabold"
       />
       <div className="mx-auto min-h-[100vh] flex items-center max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
@@ -165,18 +174,32 @@ export default function Hero({
               alzarsi, ritrovare te stessə e riprendere in mano la tua vita.
             </span>
             <div className="mt-4 flex items-center justify-center gap-x-6 lg:justify-start">
-              <Button 
+              <Button
                 onClick={() => {
-                  document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+                  document
+                    .getElementById("about")
+                    ?.scrollIntoView({ behavior: "smooth" });
                   onCtaClick?.();
-                }} 
-                size="xl" 
+                }}
+                size="xl"
                 variant="outline"
                 onMouseEnter={() => setIsHoveringButton(true)}
                 onMouseLeave={() => setIsHoveringButton(false)}
               >
                 Inizia ora
               </Button>
+            </div>
+
+            {/* Mini stats - visible only on desktop */}
+            <div className="hidden lg:flex gap-8 mt-12 opacity-80">
+              <div>
+                <p className="text-3xl font-bold">10+</p>
+                <p className="text-sm mt-1">Anni esperienza</p>
+              </div>
+              <div>
+                <p className="text-3xl font-bold">FIDAL</p>
+                <p className="text-sm mt-1">Istruttrice</p>
+              </div>
             </div>
           </div>
 
@@ -210,7 +233,9 @@ export default function Hero({
           style={{
             left: mousePosition.x,
             top: mousePosition.y,
-            transform: `translate(-50%, -50%) scale(${isHoveringButton ? 0 : 1})`,
+            transform: `translate(-50%, -50%) scale(${
+              isHoveringButton ? 0 : 1
+            })`,
           }}
         >
           <div className="flex items-center justify-center w-16 h-16 rounded-full bg-white text-black font-bold shadow-lg">
@@ -235,7 +260,7 @@ export default function Hero({
           "crescita",
         ]}
         direction="right"
-        speedSeconds={36}
+        speedSeconds={22}
         className="absolute bottom-0 left-0 h-24 flex items-center text-white/10 text-[4rem] md:text-[5.5rem] font-extrabold"
       />
     </section>
