@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from "next/image";
 import ScrollingWords from "./ScrollingWords";
+import Button from "./Button";
 
 type HeroProps = {
   title?: string;
@@ -17,10 +18,10 @@ export default function Hero({
 }: HeroProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isHoveringButton, setIsHoveringButton] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const strengthRef = useRef(0.7); // gradient intensity
 
-  
   useEffect(() => {
     let raf = 0;
     let x = 50;
@@ -164,13 +165,15 @@ export default function Hero({
               alzarsi, ritrovare se stesse e riprendere in mano la propria vita.
             </span>
             <div className="mt-4 flex items-center justify-center gap-x-6 lg:justify-start">
-              <button
-                type="button"
-                onClick={onCtaClick}
-                className="rounded-md bg-white/10 px-10 py-4 text-md font-semibold text-white ring-1 ring-inset ring-white/30 backdrop-blur hover:bg-white/20"
+              <Button 
+                onClick={onCtaClick} 
+                size="xl" 
+                variant="outline"
+                onMouseEnter={() => setIsHoveringButton(true)}
+                onMouseLeave={() => setIsHoveringButton(false)}
               >
                 Inizia ora
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -200,11 +203,11 @@ export default function Hero({
       {/* Hover overlay: 64x64 circle following cursor */}
       {isHovered && (
         <div
-          className="absolute pointer-events-none z-10"
+          className="absolute pointer-events-none z-10 transition-transform duration-200 "
           style={{
             left: mousePosition.x,
             top: mousePosition.y,
-            transform: "translate(-50%, -50%)",
+            transform: `translate(-50%, -50%) scale(${isHoveringButton ? 0 : 1})`,
           }}
         >
           <div className="flex items-center justify-center w-16 h-16 rounded-full bg-white text-black font-bold shadow-lg">

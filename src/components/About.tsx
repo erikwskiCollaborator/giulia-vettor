@@ -1,6 +1,7 @@
 'use client';
 
 import Image from "next/image";
+import Button from "./Button";
 
 type AboutProps = {
   onCtaClick?: () => void;
@@ -57,27 +58,46 @@ export default function About({ onCtaClick }: AboutProps) {
 
             {/* Badge certificazioni a destra */}
             <div className="flex flex-col items-center lg:items-start">
-              <div className="border-2 border-primary rounded-lg p-4 bg-white shadow-lg">
-                <p className="text-xs font-semibold text-primary mb-2 text-center">
-                  Riconoscimento
+              <div className="border-2 border-primary rounded-lg p-4 bg-white shadow-lg max-w-[200px]">
+                <p className="text-xs font-semibold text-primary mb-3 text-center">
+                  Riconoscimenti
                 </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
-                    <span className="text-xs font-bold text-primary">ASI</span>
+                <div className="flex items-center justify-center gap-3 mb-3">
+                  {/* Tripla Laurea */}
+                  <div className="flex flex-col items-center">
+                    <div className="relative">
+                      <span className="text-4xl">🎓</span>
+                      <span className="absolute -top-2 -right-2 bg-secondary text-white border-white border font-bold rounded-full px-2 py-1 text-xs">
+                        x3
+                      </span>
+                    </div>
                   </div>
-                  <div className="w-12 h-12 bg-gray-200 rounded overflow-hidden flex items-center justify-center">
-                    <span className="text-2xl">🇮🇹</span>
+                  {/* Logo FIDAL */}
+                  <div className="w-20 h-14 border-2 border-primary border-opacity-40 p-1 rounded flex items-center justify-center overflow-hidden">
+                    <Image
+                      src="/images/fidal.svg"
+                      alt="FIDAL"
+                      width={100}
+                      height={56}
+                      className="w-full h-full object-contain"
+                    />
                   </div>
                 </div>
-                <p className="text-[0.6rem] text-gray-600 mt-2 text-center leading-tight">
-                  QUALIFICA PROMOZIONE
-                  <br />
-                  SPORTIVA
-                  <br />
-                  DISCIPLINE ASSOCIATE
-                  <br />
-                  CONI
-                </p>
+                <div className="text-[0.65rem] text-gray-700 text-start leading-tight space-y-1">
+                  <p className="font-semibold text-primary text-right">
+                    Istruttrice FIDAL
+                  </p>
+                  <p>
+                    <span className="font-semibold text-secondary">
+                      Laurea in:{" "}
+                    </span>
+                    <ul className="list-disc list-inside">
+                      <li>Scienze motorie</li>
+                      <li>Scienze pedagogiche</li>
+                      <li>Scienze dell&apos;educazione</li>
+                    </ul>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -112,36 +132,28 @@ export default function About({ onCtaClick }: AboutProps) {
                 <span className="text-secondary">CONOSCERTI</span>
               </h2>
 
-              <p className="text-base sm:text-lg leading-relaxed opacity-90">
-                I&apos;M A COACH, TRAINER, AND RUNNER—BUT MORE THAN THAT, I
-                CREATE SOLUTIONS FOR RUNNERS THAT ALLOW THEM TO FEEL BETTER IN
-                THEIR BODIES, INCREASE THEIR PERFORMANCE, RECOVER FASTER AND RUN
-                HAPPIER.
+              <p className="text-base sm:text-lg leading-relaxed opacity-90 font-medium">
+                Sono <strong>Istruttrice FIDAL</strong> e <strong>allenatrice da oltre 10 anni</strong>, con tre lauree in Scienze Motorie, Scienze Pedagogiche e Scienze dell&apos;Educazione. Corro e gareggio sia su pista che su strada, vivendo in prima persona ogni aspetto della corsa.
               </p>
 
-              <p className="text-sm sm:text-base leading-relaxed opacity-80">
-                I love my running community and my highest priority is making
-                sure that training is sustainable and enjoyable—not just another
-                burden or stressor in your already hectic life. I can&apos;t
-                wait to bring my diverse education and movement background to
-                help you succeed in training on your own terms.
+              <p className="text-sm sm:text-base leading-relaxed opacity-90">
+                La mia missione è diffondere uno <strong>stile di vita sano con lo sport al centro</strong>. Per me, la corsa non è solo performance: è <strong>benessere globale</strong>, un percorso di miglioramento delle proprie abilità e risorse, sia mentali che fisiche.
+              </p>
+
+              <p className="text-sm sm:text-base leading-relaxed opacity-90">
+                Educo a uno <strong>stile di corsa</strong> che non punta solo ai record, ma a migliorare la <strong>qualità della tua vita</strong>. Perché correre bene significa vivere meglio.
               </p>
 
               <div className="pt-4">
-                <button
-                  type="button"
-                  onClick={onCtaClick}
-                  className="rounded-full border-2 border-white px-8 py-3 text-sm font-semibold text-white hover:bg-white hover:text-primary transition-all duration-300"
-                >
+                <Button onClick={onCtaClick} size="l" variant="outline">
                   RICOMINCIA DA TE
-                </button>
+                </Button>
               </div>
 
               {/* Citazione in basso */}
               <div className="pt-8">
                 <p className="text-xs sm:text-sm italic opacity-70 leading-relaxed">
-                  CITAZIONE CHE TI PIACE CITAZIONE CHE TI PIACE CITAZIONE CHE TI
-                  PIACE CITAZIONE CHE TI PIACE
+                  &ldquo;La corsa è libertà, è scoperta, è miglioramento continuo. È il viaggio verso la versione migliore di te stesso.&rdquo;
                 </p>
               </div>
             </div>
