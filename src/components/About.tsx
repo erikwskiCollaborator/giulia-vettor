@@ -127,9 +127,9 @@ export default function About({ onCtaClick }: AboutProps) {
             {/* Contenuto a destra */}
             <div className="text-white space-y-6 pt-8 lg:pt-16">
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
-                <span className="text-secondary">PIACERE DI</span>
+                <span className="text-white">PIACERE DI</span>
                 <br />
-                <span className="text-secondary">CONOSCERTI</span>
+                <span className="text-white">CONOSCER</span><span className="text-secondary">TI</span>
               </h2>
 
               <p className="text-base sm:text-lg leading-relaxed opacity-90 font-medium">
