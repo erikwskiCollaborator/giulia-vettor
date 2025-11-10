@@ -11,6 +11,7 @@ type ButtonProps = {
   type?: 'button' | 'submit' | 'reset';
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  disabled?: boolean;
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -35,6 +36,7 @@ export default function Button({
   type = 'button',
   onMouseEnter,
   onMouseLeave,
+  disabled = false,
 }: ButtonProps) {
   return (
     <button
@@ -42,6 +44,7 @@ export default function Button({
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      disabled={disabled}
       className={`
         rounded-full 
         border-2 
