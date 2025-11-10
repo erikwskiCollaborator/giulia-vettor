@@ -1,13 +1,15 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import Button from "./Button";
 import { COACHING_PACKAGES } from "@/lib/packages";
 
-type PackagesProps = {
-  onPackageSelect?: (packageId: string) => void;
-};
+export default function Packages() {
+  const router = useRouter();
 
-export default function Packages({ onPackageSelect }: PackagesProps) {
+  const handlePackageClick = (packageId: string) => {
+    router.push(`/checkout?packageId=${packageId}`);
+  };
   return (
     <section id="packages" className="relative bg-gradient-to-b from-white to-gray-50 py-16 sm:py-24">
       <div className="mx-auto max-w-[92rem] px-6 lg:px-8">
@@ -96,7 +98,7 @@ export default function Packages({ onPackageSelect }: PackagesProps) {
                   size="m"
                   variant={pkg.highlight ? 'outline' : 'primary'}
                   className="w-full"
-                  onClick={() => onPackageSelect?.(pkg.id)}
+                  onClick={() => handlePackageClick(pkg.id)}
                 >
                   INIZIA ORA
                 </Button>

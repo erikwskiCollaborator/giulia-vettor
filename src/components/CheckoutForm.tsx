@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useMemo, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
 import Button from './Button';
 import { COACHING_PACKAGES, packagesById } from '@/lib/packages';
 
@@ -27,10 +27,21 @@ const preferenceOptions: PreferenceOption[] = [
   },
 ];
 
-export default function CheckoutForm() {
+type CheckoutFormProps = {
+  preselectedPackageId?: string | null;
+};
+
+export default function CheckoutForm({ preselectedPackageId = null }: CheckoutFormProps) {
   const [selectedPackageId, setSelectedPackageId] = useState<string | null>(
-    COACHING_PACKAGES[0]?.id ?? null
+    preselectedPackageId ?? COACHING_PACKAGES[0]?.id ?? null
   );
+
+  // Update selected package when preselectedPackageId changes
+  useEffect(() => {
+    if (preselectedPackageId) {
+      setSelectedPackageId(preselectedPackageId);
+    }
+  }, [preselectedPackageId]);
   const [customerName, setCustomerName] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
   const [notes, setNotes] = useState('');
