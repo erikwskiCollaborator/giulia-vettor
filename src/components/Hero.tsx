@@ -123,22 +123,29 @@ export default function Hero({
       {/* Top marquee */}
       <ScrollingWords
         words={[
-          "corsa",
-          "running",
-          "respiro",
+          "respirare",
           "energia",
-          "forza",
           "benessere",
-          "focus",
-          "ritmo",
           "movimento",
+          "allegria",
           "equilibrio",
-          "performance",
+          "obiettivi",
+          "migliorarsi",
+          "gioia",
+          "motivazione",
+          "fiducia",
+          "sfida",
+          "crescita",
+          "gratitudine",
+          "costanza",
+          "serenità",
+          "condivisione",
         ]}
         direction="left"
-        speedSeconds={25}
+        speedSeconds={40}
         className="absolute top-0 left-0 h-24 flex items-center text-white/10 text-[4rem] md:text-[5.5rem] font-extrabold"
       />
+
       <div className="mx-auto min-h-[100vh] flex items-center max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
         <div className="relative grid items-center gap-12 lg:grid-cols-2 pb-32">
           {/* Content */}
@@ -151,27 +158,32 @@ export default function Hero({
               className="w-32 md:w-52 lg:w-60 xl:w-64 h-auto mb-6 mx-auto lg:mx-0"
               priority
             />
-            <h2 className="opacity-80 text-2xl font-bold tracking-tight sm:text-4xl">
-              Run your way,
-            </h2>
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
-              Allenati con <br />
+              ALLENATI CON
+              <br />
               <span className="text-white relative">
-                <span className="absolute left-[2px] top-[4px] sm:left-[5px] sm:top-[10px] text-primary z-[-1]">
+                <span className="absolute left-[2px] top-[4px] sm:left-[5px] sm:top-[10px] text-secondary z-[-1]">
                   ME
                 </span>
                 ME
               </span>
               <span className="text-white relative ml-1">
-                <span className="absolute left-[2px] top-[4px] sm:left-[4px] sm:top-[8px] text-secondary z-[-1]">
-                  TODO
+                <span className="absolute left-[2px] top-[4px] sm:left-[4px] sm:top-[8px] text-primary z-[-1]">
+                  TO
                 </span>
-                TODO
+                TO
+              </span>
+              <span className="text-white relative ml-1">
+                <span className="absolute left-[2px] top-[4px] sm:left-[4px] sm:top-[8px] text-secondary z-[-1]">
+                  DO
+                </span>
+                DO
               </span>
             </h1>
             <span className="block mt-10 md:text-lg">
-              È proprio quando hai paura di iniziare che è il momento di
-              alzarsi, ritrovare te stessə e riprendere in mano la tua vita.
+              Ti senti <span className='font-bold'>bloccatə?</span> <br />
+              Allora è il momento giusto: ritrova te stessə e prendi in mano la
+              tua vita. Muoviti verso i tuoi obiettivi, cambia il passo!
             </span>
             <div className="mt-4 flex items-center justify-center gap-x-6 lg:justify-start">
               <Button
@@ -215,7 +227,7 @@ export default function Hero({
               }}
             />
             <Image
-              src="/images/hero-image.png"
+              src="/images/hero.png"
               alt="Hero Image"
               width={200} // fallback for SSR
               height={100} // fallback for SSR
@@ -247,20 +259,26 @@ export default function Hero({
       {/* Bottom marquee */}
       <ScrollingWords
         words={[
-          "grinta",
-          "passi",
           "resistenza",
-          "motivazione",
-          "endurance",
           "velocità",
-          "core",
-          "fiducia",
-          "sorriso",
-          "sfida",
-          "crescita",
+          "forza",
+          "stabilità",
+          "rivincita",
+          "cadenza",
+          "partenza",
+          "passo",
+          "tecnica",
+          "ritmo",
+          "competere",
+          "migliorare",
+          "vittorie",
+          "allenarsi",
+          "traguardo",
+          "tempo",
+          "team",
         ]}
         direction="right"
-        speedSeconds={22}
+        speedSeconds={36}
         className="absolute bottom-0 left-0 h-24 flex items-center text-white/10 text-[4rem] md:text-[5.5rem] font-extrabold"
       />
     </section>

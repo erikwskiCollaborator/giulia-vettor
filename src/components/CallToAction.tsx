@@ -1,13 +1,16 @@
 'use client';
 
+import { useState } from "react";
 import Image from "next/image";
 import Button from "./Button";
+import CalendlyModal from "./CalendlyModal";
 
 type CallToActionProps = {
   onCtaClick?: () => void;
 };
 
 export default function CallToAction({ onCtaClick }: CallToActionProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <section className="relative bg-gradient-to-br from-gray-900 via-primary/95 to-gray-900 py-16 sm:py-24 overflow-hidden">
       {/* Decorative gradient blobs */}
@@ -19,19 +22,33 @@ export default function CallToAction({ onCtaClick }: CallToActionProps) {
           {/* Content */}
           <div className="text-white">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
-              <span className="text-white">HAI ANCORA </span>
-              <span className="text-secondary">DUBBI?</span>
+              <span className="text-white">HAI DOMANDE? </span>
             </h2>
-            
-            <p className="text-base sm:text-lg leading-relaxed opacity-90 mb-8">
-              Nessun problema. Non serve essere espertə in tutto questo — è il mio lavoro! Chattiamo assieme e aiutiamoci a capire le migliori opzioni per te. Le consulenze gratuite sono veloci e completamente senza pressioni.
+
+            <p className="text-base sm:text-lg leading-relaxed opacity-90">
+              Nessun problema, sono qui per te.
             </p>
 
-            <Button 
-              size="xl" 
+            <p className="text-base sm:text-lg leading-relaxed opacity-90 mb-2">
+              Questo è il mio lavoro e ti aiuterò con piacere.
+            </p>
+
+            <p className="text-base sm:text-lg leading-relaxed opacity-90">
+              Parliamo insieme per capire le opzioni migliori per te.
+            </p>
+
+            <p className="text-base sm:text-lg leading-relaxed opacity-90 mb-8">
+              Prenota una consulenza gratuita per chiedermi ciò che vuoi.
+            </p>
+
+            <Button
+              size="xl"
               variant="secondary"
               className="bg-secondary border-secondary hover:bg-secondary/90 hover:border-secondary/90"
-              onClick={onCtaClick}
+              onClick={() => {
+                setIsModalOpen(true);
+                onCtaClick?.();
+              }}
             >
               PRENOTA UNA CONSULENZA GRATUITA
             </Button>
@@ -46,7 +63,7 @@ export default function CallToAction({ onCtaClick }: CallToActionProps) {
             <div className="relative">
               {/* Decorative ring */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-secondary to-primary blur-2xl opacity-30 scale-110"></div>
-              
+
               {/* Image container */}
               <div className="relative w-72 h-72 sm:w-96 sm:h-96 lg:w-[450px] lg:h-[450px] rounded-full overflow-hidden border-8 border-white/20 shadow-2xl backdrop-blur">
                 <Image
@@ -66,6 +83,12 @@ export default function CallToAction({ onCtaClick }: CallToActionProps) {
           </div>
         </div>
       </div>
+
+      {/* Calendly Modal */}
+      <CalendlyModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </section>
   );
 }

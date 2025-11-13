@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Image from "next/image";
 import Button from "./Button";
@@ -20,39 +20,43 @@ export default function About({ onCtaClick }: AboutProps) {
                 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold"
                 style={{ lineHeight: "0.8" }}
               >
-                <span className="text-primary">CORRI DA </span>
-                <span className="text-secondary">PRO</span>
+                <span className="text-primary">ALLENA </span>
+                <span className="text-gray-300"> IL TUO </span>
+                <span className="text-secondary">CORPO.</span>
                 <br />
-                <span className="text-primary">VIVI DA </span>
-                <span className="text-secondary">AMATORE</span>
+                <span className="text-gray-300">FAI </span>
+                <span className="text-secondary">CORRERE </span>
+                <span className="text-gray-300">LA </span>
+                <span className="text-primary">MENTE</span>
               </h2>
             </div>
 
             {/* Filosofia al centro */}
             <div className="space-y-4 text-gray-700 leading-relaxed">
               <p className="text-base sm:text-lg">
-                Vuoi una preparazione da PRO, ma la tua vita non è solo su
-                Strava? Con il mio{" "}
-                <span className="text-primary font-bold">ME-TODO</span>, ottieni
-                un allenamento scientifico ed efficace. Corri al massimo, senza
-                sacrificare lavoro e famiglia.{" "}
-                <span className="text-primary font-bold">
-                  Corri da <span className="text-secondary">Pro</span>, Vivi da{" "}
-                  <span className="text-secondary">Amatore</span>.
-                </span>
+                Vuoi
+                <span className="text-primary font-bold"> STARE BENE </span>
+                <span className="text-secondary font-bold">CORRENDO </span>e
+                migliorarti? <br />
+                Smettila di affidarti al caso e segui il
+                <span className="text-secondary font-bold"> ME</span>
+                <span className="text-primary font-bold">TO</span>
+                <span className="text-secondary font-bold">DO </span>
+                giusto per <span className="text-secondary font-bold">TE</span>,
+                con una programmazione scientifica e{" "}
+                <span className="text-primary font-bold">PERSONALIZZATA.</span>
+                <br />
+                Puoi raggiungere i tuoi{" "}
+                <span className="text-secondary font-bold">OBIETTIVI</span>{" "}
+                sportivi conciliando l’allenamento con impegni, relazioni e
+                VITA.
               </p>
               <p className="text-base sm:text-lg">
-                Non devi rinunciare alla passione per la corsa per i tuoi
-                impegni. Ti offro un metodo che applica l&apos;efficacia della
-                <span className="text-primary font-bold">
-                  {" "}
-                  tecnica della corsa
-                </span>{" "}
-                su pista alla strada. Massima performance, minima interferenza.
-                Migliora i tuoi tempi come un{" "}
-                <span className="text-secondary font-bold">PRO</span>. Goditi la
-                tua vita da{" "}
-                <span className="text-secondary font-bold">AMATORE</span>.
+                Allena il tuo ritmo, supera le tue barriere, raggiungi i tuoi
+                traguardi. Migliora la costanza e la{" "}
+                <span className="text-secondary font-bold">FORZA</span> che ti
+                porteranno ad esplorare{" "}
+                <span className="text-primary font-bold">STRADE NUOVE.</span>
               </p>
             </div>
 
@@ -85,7 +89,7 @@ export default function About({ onCtaClick }: AboutProps) {
                 </div>
                 <div className="text-[0.65rem] text-gray-700 text-start leading-tight space-y-1">
                   <p className="font-semibold text-primary text-right">
-                    Coach FIDAL
+                    Istruttrice FIDAL
                   </p>
                   <div>
                     <span className="font-semibold text-secondary">
@@ -129,28 +133,66 @@ export default function About({ onCtaClick }: AboutProps) {
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
                 <span className="text-white">PIACERE DI</span>
                 <br />
-                <span className="text-white">CONOSCER</span><span className="text-secondary">TI</span>
+                <span className="text-white">CONOSCER</span>
+                <span className="text-secondary">TI</span>
               </h2>
 
-              <p className="text-base sm:text-lg leading-relaxed opacity-90 font-medium">
-                Sono <strong>Coach FIDAL</strong> con <strong>oltre 10 anni di esperienza</strong>, con tre lauree in Scienze Motorie, Scienze Pedagogiche e Scienze dell&apos;Educazione. Corro e gareggio sia su pista che su strada, vivendo in prima persona ogni aspetto della corsa.
+              <p className="text-base sm:text-lg leading-relaxed text-gray-200 font-medium">
+                Sono{" "}
+                <strong className="text-white">
+                  Atleta, Scienziata motoria e Istruttrice FIDAL
+                </strong>{" "}
+                con oltre{" "}
+                <strong className="text-white">10 anni di esperienza.</strong>
+                <br />
+                Sono anche laureata in Scienze Pedagogiche e in Scienze
+                dell&apos;Educazione.
+                <br />
+                Amo la sana competizione e vivo in prima persona ogni aspetto
+                della corsa.
               </p>
 
-              <p className="text-sm sm:text-base leading-relaxed opacity-90">
-                La mia missione è diffondere uno <strong>stile di vita sano con lo sport al centro</strong>. Per me, la corsa non è solo performance: è <strong>benessere globale</strong>, un percorso di miglioramento delle proprie abilità e risorse, sia mentali che fisiche.
+              <p className="text-sm sm:text-base leading-relaxed text-gray-200">
+                La mia missione è diffondere uno{" "}
+                <strong className="bg-white px-2 rounded-xl text-primary whitespace-nowrap">
+                  stile di vita sano
+                </strong>{" "}
+                che metta lo{" "}
+                <strong className="bg-white px-2 rounded-xl text-secondary whitespace-nowrap">
+                  sport nella tua quotidianità.
+                </strong>{" "}
+                La corsa non è solo performance ma{" "}
+                <strong className="bg-white px-2 rounded-xl text-primary whitespace-nowrap">
+                  benessere globale
+                </strong>{" "}
+                e un percorso di{" "}
+                <strong className="bg-white px-2 rounded-xl text-secondary whitespace-nowrap">
+                  miglioramento
+                </strong>{" "}
+                delle proprie abilità e risorse, sia mentali che fisiche.
               </p>
 
-              <p className="text-sm sm:text-base leading-relaxed opacity-90">
-                Educo a uno <strong>stile di corsa</strong> che non punta solo ai record, ma a migliorare la <strong>qualità della tua vita</strong>. Perché correre bene significa vivere meglio.
+              <p className="text-sm sm:text-base leading-relaxed text-gray-200">
+                Educo a uno{" "}
+                <strong className="bg-white px-2 rounded-xl text-secondary whitespace-nowrap">
+                  stile di corsa
+                </strong>{" "}
+                che non punta solo ai record ma a migliorare{" "}
+                <strong className="bg-white px-2 rounded-xl text-primary whitespace-nowrap">
+                  la qualità della tua intera vita.
+                </strong>{" "}
+                Perché correre bene significa vivere meglio.
               </p>
 
               <div className="pt-4">
-                <Button 
+                <Button
                   onClick={() => {
-                    document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' });
+                    document
+                      .getElementById("packages")
+                      ?.scrollIntoView({ behavior: "smooth" });
                     onCtaClick?.();
-                  }} 
-                  size="l" 
+                  }}
+                  size="l"
                   variant="outline"
                 >
                   RICOMINCIA DA TE
@@ -160,7 +202,9 @@ export default function About({ onCtaClick }: AboutProps) {
               {/* Citazione in basso */}
               <div className="pt-8">
                 <p className="text-xs sm:text-sm italic opacity-70 leading-relaxed">
-                  &ldquo;La corsa è libertà, è scoperta, è miglioramento continuo. È il viaggio verso la versione migliore di te stessə.&rdquo;
+                  &ldquo;La corsa è libertà, è scoperta, è miglioramento
+                  continuo. È il viaggio verso la versione migliore di te
+                  stessə.&rdquo;
                 </p>
               </div>
             </div>
@@ -170,4 +214,3 @@ export default function About({ onCtaClick }: AboutProps) {
     </section>
   );
 }
-
