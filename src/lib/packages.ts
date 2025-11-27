@@ -6,6 +6,7 @@ export type CoachingPackage = {
   features: string[];
   highlight?: boolean;
   note?: string;
+  crossSellForza?: boolean; // Se true, proponi l'add-on del programma di forza
 };
 
 export const COACHING_PACKAGES: CoachingPackage[] = [
@@ -14,6 +15,7 @@ export const COACHING_PACKAGES: CoachingPackage[] = [
     name: "COACHING DI CORSA",
     subtitle: "MENSILE",
     price: 69,
+    crossSellForza: true,
     features: [
       "4 settimane di allenamenti di corsa personalizzati",
       "1 call iniziale e 1 feedback settimanale",
@@ -24,6 +26,7 @@ export const COACHING_PACKAGES: CoachingPackage[] = [
     name: "COACHING DI CORSA",
     subtitle: "QUADRIMESTRALE",
     price: 239,
+    crossSellForza: true,
     features: [
       "16 settimane di allenamenti di corsa personalizzati",
       "Mobilità e stretching progressivi",
@@ -60,12 +63,9 @@ export const COACHING_PACKAGES: CoachingPackage[] = [
   },
 ];
 
-export const packagesById = COACHING_PACKAGES.reduce<Record<string, CoachingPackage>>(
-  (acc, pkg) => {
-    acc[pkg.id] = pkg;
-    return acc;
-  },
-  {}
-);
-
-
+export const packagesById = COACHING_PACKAGES.reduce<
+  Record<string, CoachingPackage>
+>((acc, pkg) => {
+  acc[pkg.id] = pkg;
+  return acc;
+}, {});

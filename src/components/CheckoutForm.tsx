@@ -21,6 +21,15 @@ export default function CheckoutForm({
       setSelectedPackageId(preselectedPackageId);
     }
   }, [preselectedPackageId]);
+
+  // Reset forza add-on when switching to a package without crossSellForza
+  useEffect(() => {
+    const pkg = selectedPackageId ? packagesById[selectedPackageId] : undefined;
+    if (!pkg?.crossSellForza) {
+      setAddForzaPackage(false);
+    }
+  }, [selectedPackageId]);
+
   const [customerName, setCustomerName] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
@@ -28,6 +37,7 @@ export default function CheckoutForm({
   const [error, setError] = useState<string | null>(null);
   const [showBankTransfer, setShowBankTransfer] = useState(false);
   const [ibanCopied, setIbanCopied] = useState(false);
+  const [addForzaPackage, setAddForzaPackage] = useState(false);
 
   const iban = "IT00 X000 0000 0000 0000 0000 000";
 
@@ -42,7 +52,10 @@ export default function CheckoutForm({
     [selectedPackageId]
   );
 
-  const totalAmount = selectedPackage?.price ?? 0;
+  const forzaPackage = packagesById["forza"];
+  const totalAmount =
+    (selectedPackage?.price ?? 0) +
+    (addForzaPackage ? forzaPackage?.price ?? 0 : 0);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -69,7 +82,10 @@ export default function CheckoutForm({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          packageId: selectedPackage.id,
+          packageIds:
+            addForzaPackage && forzaPackage
+              ? [selectedPackage.id, forzaPackage.id]
+              : [selectedPackage.id],
           customer: {
             name: customerName,
             email: customerEmail,
@@ -168,6 +184,32 @@ export default function CheckoutForm({
                   })}
                 </div>
               </fieldset>
+
+              {selectedPackage?.crossSellForza && forzaPackage && (
+                <div className="rounded-2xl border-2 border-secondary/20 bg-secondary/5 p-5 space-y-3">
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={addForzaPackage}
+                      onChange={(e) => setAddForzaPackage(e.target.checked)}
+                      className="mt-1 h-5 w-5 accent-secondary"
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-base font-bold text-gray-900">
+                          Aggiungi {forzaPackage.name} - {forzaPackage.subtitle}
+                        </span>
+                        <span className="rounded-full bg-secondary/20 px-3 py-1 text-xs font-semibold text-secondary">
+                          +€{forzaPackage.price}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-600">
+                        {forzaPackage.features[0]}
+                      </p>
+                    </div>
+                  </label>
+                </div>
+              )}
             </div>
 
             <div className="space-y-8 rounded-3xl border border-gray-200 bg-gray-50/60 p-6">
