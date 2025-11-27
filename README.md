@@ -18,7 +18,7 @@ Fill values from your Stripe dashboard:
 ```bash
 npm run dev
 ```
-
+ 
 Open [http://localhost:3000](http://localhost:3000) to see the landing. Click "Acquista il prodotto" to start the checkout.
 
 3. Production build
