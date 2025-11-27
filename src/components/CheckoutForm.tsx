@@ -269,21 +269,33 @@ export default function CheckoutForm({
                   required
                 />
                 <span className="text-sm text-gray-600">
-                  Accetto i{" "}
+                  Dichiaro di aver letto e di accettare integralmente i{" "}
                   <a
                     href="/terms"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="font-semibold text-primary underline-offset-2 hover:underline"
                   >
-                    Termini e Condizioni
+                    Termini e Condizioni di Vendita
                   </a>{" "}
-                  e l&apos;
+                  (comprese le clausole vessatorie evidenziate), l&apos;
                   <a
                     href="/privacy"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="font-semibold text-primary underline-offset-2 hover:underline"
                   >
                     Informativa Privacy
+                  </a>{" "}
+                  e la{" "}
+                  <a
+                    href="/cookie-policy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-primary underline-offset-2 hover:underline"
+                  >
+                    Cookie Policy
                   </a>
-                  .
                 </span>
               </label>
 
