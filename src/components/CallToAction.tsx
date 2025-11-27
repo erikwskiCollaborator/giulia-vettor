@@ -67,7 +67,7 @@ export default function CallToAction({ onCtaClick }: CallToActionProps) {
               {/* Image container */}
               <div className="relative w-72 h-72 sm:w-96 sm:h-96 lg:w-[450px] lg:h-[450px] rounded-full overflow-hidden border-8 border-white/20 shadow-2xl backdrop-blur">
                 <Image
-                  src="/images/cta.jpg"
+                  src="/images/image.png"
                   alt="Coach Giulia Vettor"
                   width={450}
                   height={450}

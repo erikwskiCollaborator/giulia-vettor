@@ -1,37 +1,16 @@
-'use client';
+"use client";
 
-import { FormEvent, useEffect, useMemo, useState } from 'react';
-import Button from './Button';
-import { COACHING_PACKAGES, packagesById } from '@/lib/packages';
-
-type PreferenceOption = {
-  id: string;
-  label: string;
-  description?: string;
-};
-
-const preferenceOptions: PreferenceOption[] = [
-  {
-    id: 'intro_call',
-    label: 'Voglio una video call introduttiva ravvicinata',
-    description: 'Organizza una call entro 48 ore per allineare obiettivi e programma.',
-  },
-  {
-    id: 'extra_strength',
-    label: 'Desidero approfondimenti su forza e mobilità',
-    description: 'Ricevi checklist e mini-sessioni extra da integrare ai tuoi allenamenti.',
-  },
-  {
-    id: 'newsletter',
-    label: 'Iscrivimi ai consigli settimanali (newsletter)',
-  },
-];
+import { FormEvent, useEffect, useMemo, useState } from "react";
+import Button from "./Button";
+import { COACHING_PACKAGES, packagesById } from "@/lib/packages";
 
 type CheckoutFormProps = {
   preselectedPackageId?: string | null;
 };
 
-export default function CheckoutForm({ preselectedPackageId = null }: CheckoutFormProps) {
+export default function CheckoutForm({
+  preselectedPackageId = null,
+}: CheckoutFormProps) {
   const [selectedPackageId, setSelectedPackageId] = useState<string | null>(
     preselectedPackageId ?? COACHING_PACKAGES[0]?.id ?? null
   );
@@ -42,13 +21,22 @@ export default function CheckoutForm({ preselectedPackageId = null }: CheckoutFo
       setSelectedPackageId(preselectedPackageId);
     }
   }, [preselectedPackageId]);
-  const [customerName, setCustomerName] = useState('');
-  const [customerEmail, setCustomerEmail] = useState('');
-  const [notes, setNotes] = useState('');
-  const [preferences, setPreferences] = useState<Record<string, boolean>>({});
+  const [customerName, setCustomerName] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
+  const [notes, setNotes] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showBankTransfer, setShowBankTransfer] = useState(false);
+  const [ibanCopied, setIbanCopied] = useState(false);
+
+  const iban = "IT00 X000 0000 0000 0000 0000 000";
+
+  const copyIban = () => {
+    navigator.clipboard.writeText(iban.replace(/\s/g, ""));
+    setIbanCopied(true);
+    setTimeout(() => setIbanCopied(false), 2000);
+  };
 
   const selectedPackage = useMemo(
     () => (selectedPackageId ? packagesById[selectedPackageId] : undefined),
@@ -57,25 +45,18 @@ export default function CheckoutForm({ preselectedPackageId = null }: CheckoutFo
 
   const totalAmount = selectedPackage?.price ?? 0;
 
-  const togglePreference = (id: string) => {
-    setPreferences((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
-
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!selectedPackage) {
-      setError('Seleziona un pacchetto per proseguire.');
+      setError("Seleziona un pacchetto per proseguire.");
       return;
     }
     if (!customerEmail) {
-      setError('Inserisci un indirizzo email valido.');
+      setError("Inserisci un indirizzo email valido.");
       return;
     }
     if (!acceptTerms) {
-      setError('Devi accettare i termini e condizioni per continuare.');
+      setError("Devi accettare i termini e condizioni per continuare.");
       return;
     }
 
@@ -83,10 +64,10 @@ export default function CheckoutForm({ preselectedPackageId = null }: CheckoutFo
     setError(null);
 
     try {
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
+      const response = await fetch("/api/checkout", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           packageId: selectedPackage.id,
@@ -94,24 +75,26 @@ export default function CheckoutForm({ preselectedPackageId = null }: CheckoutFo
             name: customerName,
             email: customerEmail,
           },
-          preferences,
-          notes: notes.trim() || undefined,
+          metadata: {
+            notes: notes.trim() || undefined,
+          },
         }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data?.error || 'Impossibile avviare il pagamento.');
+        throw new Error(data?.error || "Impossibile avviare il pagamento.");
       }
 
       if (data?.url) {
         window.location.href = data.url as string;
       } else {
-        throw new Error('Risposta non valida dal server Stripe.');
+        throw new Error("Risposta non valida dal server Stripe.");
       }
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Errore sconosciuto.';
+      const message =
+        err instanceof Error ? err.message : "Errore sconosciuto.";
       setError(message);
       setIsSubmitting(false);
     }
@@ -124,10 +107,13 @@ export default function CheckoutForm({ preselectedPackageId = null }: CheckoutFo
     >
       <div className="mx-auto max-w-5xl px-6 lg:px-8">
         <div className="mb-12 text-center">
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-primary">Prenota il tuo percorso</h2>
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-primary">
+            Prenota il tuo percorso
+          </h2>
           <p className="mt-4 text-gray-600 text-base sm:text-lg max-w-3xl mx-auto">
-            Seleziona il programma che preferisci, condividi le tue preferenze e completa il checkout
-            sicuro con Stripe. Riceverai subito la conferma d&apos;ordine.
+            Seleziona il programma che preferisci, aggiungi qualche nota se lo
+            ritieni opportuno e completa il checkout sicuro con Stripe.
+            Riceverai subito la conferma d&apos;ordine.
           </p>
         </div>
 
@@ -138,7 +124,9 @@ export default function CheckoutForm({ preselectedPackageId = null }: CheckoutFo
           <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
             <div className="space-y-8">
               <fieldset>
-                <legend className="text-lg font-semibold text-gray-900">Scegli il pacchetto</legend>
+                <legend className="text-lg font-semibold text-gray-900">
+                  Scegli il pacchetto
+                </legend>
                 <div className="mt-4 grid gap-4">
                   {COACHING_PACKAGES.map((pkg) => {
                     const isSelected = selectedPackageId === pkg.id;
@@ -147,8 +135,8 @@ export default function CheckoutForm({ preselectedPackageId = null }: CheckoutFo
                         key={pkg.id}
                         className={`relative flex cursor-pointer items-start gap-4 rounded-2xl border p-4 transition-all ${
                           isSelected
-                            ? 'border-primary bg-primary/5 shadow-lg shadow-primary/10'
-                            : 'border-gray-200 hover:border-primary/50'
+                            ? "border-primary bg-primary/5 shadow-lg shadow-primary/10"
+                            : "border-gray-200 hover:border-primary/50"
                         }`}
                       >
                         <input
@@ -162,53 +150,23 @@ export default function CheckoutForm({ preselectedPackageId = null }: CheckoutFo
                         />
                         <span>
                           <span className="flex flex-wrap items-center gap-2">
-                            <span className="text-base font-bold text-gray-900">{pkg.name}</span>
+                            <span className="text-base font-bold text-gray-900">
+                              {pkg.name}
+                            </span>
                             <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
                               {pkg.subtitle}
                             </span>
                           </span>
                           <span className="mt-1 block text-sm text-gray-600">
                             {pkg.features[0]}
-                            {pkg.highlight ? ' • Programma consigliato' : ''}
+                            {pkg.highlight ? " • Programma consigliato" : ""}
                           </span>
                           <span className="mt-2 inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
-                            €{pkg.price.toLocaleString('it-IT', { minimumFractionDigits: 0 })}
+                            €
+                            {pkg.price.toLocaleString("it-IT", {
+                              minimumFractionDigits: 0,
+                            })}
                           </span>
-                        </span>
-                      </label>
-                    );
-                  })}
-                </div>
-              </fieldset>
-
-              <fieldset>
-                <legend className="text-lg font-semibold text-gray-900">Preferenze</legend>
-                <p className="mt-1 text-sm text-gray-500">
-                  Spunta ciò che vuoi approfondire: userò queste info per personalizzare la tua
-                  esperienza di onboarding.
-                </p>
-                <div className="mt-4 grid gap-3">
-                  {preferenceOptions.map((option) => {
-                    const checked = Boolean(preferences[option.id]);
-                    return (
-                      <label
-                        key={option.id}
-                        className={`flex cursor-pointer items-start gap-3 rounded-2xl border p-4 transition ${
-                          checked ? 'border-secondary bg-secondary/5' : 'border-gray-200 hover:border-secondary/40'
-                        }`}
-                      >
-                        <input
-                          type="checkbox"
-                          name={`preferences.${option.id}`}
-                          checked={checked}
-                          onChange={() => togglePreference(option.id)}
-                          className="mt-1 h-5 w-5 accent-secondary"
-                        />
-                        <span>
-                          <span className="text-sm font-semibold text-gray-900">{option.label}</span>
-                          {option.description && (
-                            <span className="mt-1 block text-xs text-gray-500">{option.description}</span>
-                          )}
                         </span>
                       </label>
                     );
@@ -218,7 +176,9 @@ export default function CheckoutForm({ preselectedPackageId = null }: CheckoutFo
 
               <div className="space-y-4">
                 <label className="block">
-                  <span className="text-sm font-semibold text-gray-900">Note opzionali</span>
+                  <span className="text-sm font-semibold text-gray-900">
+                    Note opzionali
+                  </span>
                   <textarea
                     value={notes}
                     onChange={(event) => setNotes(event.target.value)}
@@ -232,9 +192,13 @@ export default function CheckoutForm({ preselectedPackageId = null }: CheckoutFo
 
             <div className="space-y-8 rounded-3xl border border-gray-200 bg-gray-50/60 p-6">
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-gray-900">I tuoi dati</h3>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  I tuoi dati
+                </h3>
                 <label className="block">
-                  <span className="text-sm font-semibold text-gray-900">Nome</span>
+                  <span className="text-sm font-semibold text-gray-900">
+                    Nome
+                  </span>
                   <input
                     type="text"
                     value={customerName}
@@ -262,11 +226,15 @@ export default function CheckoutForm({ preselectedPackageId = null }: CheckoutFo
                 <div className="flex items-center justify-between text-sm text-gray-700">
                   <span>Totale</span>
                   <span className="text-xl font-extrabold text-primary">
-                    €{totalAmount.toLocaleString('it-IT', { minimumFractionDigits: 0 })}
+                    €
+                    {totalAmount.toLocaleString("it-IT", {
+                      minimumFractionDigits: 0,
+                    })}
                   </span>
                 </div>
                 <p className="mt-2 text-xs text-gray-500">
-                  Il pagamento avviene in modo sicuro su Stripe. Riceverai la fattura via email.
+                  Il pagamento avviene in modo sicuro su Stripe. Riceverai la
+                  fattura via email.
                 </p>
               </div>
 
@@ -279,10 +247,13 @@ export default function CheckoutForm({ preselectedPackageId = null }: CheckoutFo
                   required
                 />
                 <span className="text-sm text-gray-600">
-                  Accetto i{' '}
-                  <a href="/terms" className="font-semibold text-primary underline-offset-2 hover:underline">
+                  Accetto i{" "}
+                  <a
+                    href="/terms"
+                    className="font-semibold text-primary underline-offset-2 hover:underline"
+                  >
                     Termini e Condizioni
-                  </a>{' '}
+                  </a>{" "}
                   e l&apos;
                   <a
                     href="/privacy"
@@ -307,12 +278,151 @@ export default function CheckoutForm({ preselectedPackageId = null }: CheckoutFo
                 disabled={isSubmitting}
                 className="w-full justify-center bg-secondary hover:bg-secondary/90 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? 'Reindirizzamento in corso…' : 'Procedi al pagamento'}
+                {isSubmitting
+                  ? "Reindirizzamento in corso…"
+                  : "Procedi al pagamento"}
               </Button>
 
               <p className="text-xs text-gray-400">
-                * Pagamento sicuro con Stripe. I dati delle carte non transitano sui nostri server.
+                * Pagamento sicuro con Stripe. I dati delle carte non transitano
+                sui nostri server.
               </p>
+
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="bg-gray-50/60 px-2 text-gray-500">
+                    oppure
+                  </span>
+                </div>
+              </div>
+
+              <Button
+                type="button"
+                size="xl"
+                variant="primaryOutline"
+                onClick={() => setShowBankTransfer(!showBankTransfer)}
+                className="w-full justify-center"
+              >
+                Istruzioni Bonifico
+              </Button>
+
+              {showBankTransfer && (
+                <div className="rounded-2xl border-2 border-primary/20 bg-white p-6 shadow-md space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                  <h4 className="text-base font-bold text-primary flex items-center gap-2">
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                      />
+                    </svg>
+                    Istruzioni per Bonifico Bancario
+                  </h4>
+                  <p className="text-sm text-gray-600">
+                    Effettua il bonifico con i seguenti dati. Una volta ricevuto
+                    il pagamento, <strong>contattami su Whatsapp</strong> per
+                    pianificare il primo incontro.
+                  </p>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex flex-col md:flex-row justify-start md:justify-between items-start p-3 bg-gray-50 rounded-lg">
+                      <span className="font-semibold text-gray-700">
+                        Beneficiario:
+                      </span>
+                      <span className="text-right text-gray-900">
+                        Giulia Vettor
+                      </span>
+                    </div>
+                    <div className="flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center p-3 bg-gray-50 rounded-lg">
+                      <span className="font-semibold text-gray-700">IBAN:</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-right text-gray-900 font-mono text-xs sm:text-sm">
+                          {iban}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={copyIban}
+                          className="p-1.5 rounded-md hover:bg-primary/10 transition-colors text-primary"
+                          title="Copia IBAN"
+                        >
+                          {ibanCopied ? (
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M5 13l4 4L19 7"
+                              />
+                            </svg>
+                          ) : (
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                              />
+                            </svg>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                    <div className="flex flex-col md:flex-row justify-start md:justify-between items-start p-3 bg-gray-50 rounded-lg">
+                      <span className="font-semibold text-gray-700">
+                        Importo:
+                      </span>
+                      <span className="text-right text-primary font-bold">
+                        €
+                        {totalAmount.toLocaleString("it-IT", {
+                          minimumFractionDigits: 0,
+                        })}
+                      </span>
+                    </div>
+                    <div className="flex flex-col md:flex-row justify-start md:justify-between items-start p-3 bg-secondary/5 rounded-lg border border-secondary/20">
+                      <span className="font-semibold text-gray-700">
+                        Causale:
+                      </span>
+                      <span className="text-right text-gray-900 font-medium">
+                        {selectedPackage?.name} - {selectedPackage?.subtitle}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="pt-2 border-t border-gray-200">
+                    <p className="text-xs text-gray-500 leading-relaxed">
+                      <strong className="text-secondary">Importante:</strong>{" "}
+                      Inserisci la causale esattamente come indicata sopra. Dopo
+                      aver effettuato il bonifico, invia una copia della
+                      ricevuta su Whatsapp{" "}
+                      <a
+                        href="https://wa.me/393897952996?text=Ciao%20Giulia,%20vorrei%20inviarti%20la%20ricevuta%20del%20bonifico"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary font-semibold underline"
+                      >
+                        +39 389 795 2996
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </form>
@@ -320,5 +430,3 @@ export default function CheckoutForm({ preselectedPackageId = null }: CheckoutFo
     </section>
   );
 }
-
-

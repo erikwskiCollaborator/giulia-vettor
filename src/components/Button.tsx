@@ -1,39 +1,41 @@
-import React from 'react';
+import React from "react";
 
-type ButtonSize = 'sm' | 'm' | 'l' | 'xl';
+type ButtonSize = "sm" | "m" | "l" | "xl";
 
 type ButtonProps = {
   children: React.ReactNode;
   onClick?: () => void;
   size?: ButtonSize;
-  variant?: 'primary' | 'secondary' | 'outline';
+  variant?: "primary" | "secondary" | "outline" | "primaryOutline";
   className?: string;
-  type?: 'button' | 'submit' | 'reset';
+  type?: "button" | "submit" | "reset";
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   disabled?: boolean;
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: 'px-4 py-2 text-xs',
-  m: 'px-6 py-2.5 text-sm',
-  l: 'px-8 py-3 text-sm',
-  xl: 'px-10 py-4 text-base',
+  sm: "px-4 py-2 text-xs",
+  m: "px-6 py-2.5 text-sm",
+  l: "px-8 py-3 text-sm",
+  xl: "px-10 py-4 text-base",
 };
 
 const variantClasses = {
-  primary: 'bg-primary text-white border-primary hover:bg-primary/90',
-  secondary: 'bg-secondary text-white border-secondary hover:bg-secondary/90',
-  outline: 'border-white text-white hover:bg-white hover:text-primary',
+  primary: "bg-primary text-white border-primary hover:bg-primary/90",
+  secondary: "bg-secondary text-white border-secondary hover:bg-secondary/90",
+  outline: "border-white text-white hover:bg-white hover:text-primary",
+  primaryOutline:
+    "border-2 border-primary text-primary bg-primary/5 hover:bg-primary hover:text-white",
 };
 
 export default function Button({
   children,
   onClick,
-  size = 'l',
-  variant = 'outline',
-  className = '',
-  type = 'button',
+  size = "l",
+  variant = "outline",
+  className = "",
+  type = "button",
   onMouseEnter,
   onMouseLeave,
   disabled = false,
@@ -60,4 +62,3 @@ export default function Button({
     </button>
   );
 }
-

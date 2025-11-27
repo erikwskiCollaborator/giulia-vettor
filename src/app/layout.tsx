@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Figtree, Montserrat } from "next/font/google";
 import "./globals.css";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import CookieBanner from "@/components/CookieBanner";
 
 const figtree = Figtree({
   subsets: ["latin"],
@@ -49,8 +50,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${figtree.variable} ${montserrat.variable} antialiased relative`}>
+      <body
+        className={`${figtree.variable} ${montserrat.variable} antialiased relative`}
+      >
         <LoadingOverlay />
+        <CookieBanner />
         {children}
       </body>
     </html>

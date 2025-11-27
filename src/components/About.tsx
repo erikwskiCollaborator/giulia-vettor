@@ -21,8 +21,8 @@ export default function About({ onCtaClick }: AboutProps) {
                 style={{ lineHeight: "0.8" }}
               >
                 <span className="text-primary">ALLENA </span>
-                <span className="text-gray-300"> IL TUO </span>
-                <span className="text-secondary">CORPO.</span>
+                <span className="text-gray-300"> IL </span>
+                <span className="text-secondary">CORPO</span>
                 <br />
                 <span className="text-gray-300">FAI </span>
                 <span className="text-secondary">CORRERE </span>
@@ -134,10 +134,18 @@ export default function About({ onCtaClick }: AboutProps) {
                 <span className="text-white">PIACERE DI</span>
                 <br />
                 <span className="text-white">CONOSCER</span>
-                <span className="text-secondary">TI</span>
+                <span
+                  className="text-secondary"
+                  style={{
+                    textShadow:
+                      "white 0px 0px 4px, white 0px 0px 0px, white 0px 0px 8px",
+                  }}
+                >
+                  TI
+                </span>
               </h2>
 
-              <p className="text-base sm:text-lg leading-relaxed text-gray-200 font-medium">
+              <p className="text-base sm:text-base leading-relaxed text-gray-200 font-medium">
                 Sono{" "}
                 <strong className="text-white">
                   Atleta, Scienziata motoria e Istruttrice FIDAL
@@ -152,7 +160,7 @@ export default function About({ onCtaClick }: AboutProps) {
                 della corsa.
               </p>
 
-              <p className="text-sm sm:text-base leading-relaxed text-gray-200">
+              <p className="text-sm sm:text-lg leading-relaxed text-gray-200">
                 La mia missione è diffondere uno{" "}
                 <strong className="bg-white px-2 rounded-xl text-primary whitespace-nowrap">
                   stile di vita sano
@@ -172,7 +180,7 @@ export default function About({ onCtaClick }: AboutProps) {
                 delle proprie abilità e risorse, sia mentali che fisiche.
               </p>
 
-              <p className="text-sm sm:text-base leading-relaxed text-gray-200">
+              <p className="text-sm sm:text-lg leading-relaxed text-gray-200">
                 Educo a uno{" "}
                 <strong className="bg-white px-2 rounded-xl text-secondary whitespace-nowrap">
                   stile di corsa
