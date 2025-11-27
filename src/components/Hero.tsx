@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import ScrollingWords from "./ScrollingWords";
 import Button from "./Button";
@@ -13,13 +13,12 @@ type HeroProps = {
 };
 
 // Animated gradient background with continuous rotation and hover overlay
-export default function Hero({
-  onCtaClick,
-}: HeroProps) {
+export default function Hero({ onCtaClick }: HeroProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isHoveringButton, setIsHoveringButton] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [hasMouse, setHasMouse] = useState(false);
   const strengthRef = useRef(0.7); // gradient intensity
 
   useEffect(() => {
@@ -51,30 +50,33 @@ export default function Hero({
         // Secondary blob rotates opposite (180° phase)
         const x2 = 50 + Math.cos(theta + Math.PI) * radiusX;
         const y2 = 50 + Math.sin(theta + Math.PI) * radiusY;
-        
+
         // Third blob with different phase for more complexity
         const x3 = 50 + Math.cos(theta + Math.PI * 0.5) * radiusX * 0.8;
         const y3 = 50 + Math.sin(theta + Math.PI * 0.5) * radiusY * 0.8;
 
-        el.style.setProperty('--gx1', `${x}%`);
-        el.style.setProperty('--gy1', `${y}%`);
-        el.style.setProperty('--gx2', `${x2}%`);
-        el.style.setProperty('--gy2', `${y2}%`);
-        el.style.setProperty('--gx3', `${x3}%`);
-        el.style.setProperty('--gy3', `${y3}%`);
-        el.style.setProperty('--gstrength', `${strengthRef.current}`);
+        el.style.setProperty("--gx1", `${x}%`);
+        el.style.setProperty("--gy1", `${y}%`);
+        el.style.setProperty("--gx2", `${x2}%`);
+        el.style.setProperty("--gy2", `${y2}%`);
+        el.style.setProperty("--gx3", `${x3}%`);
+        el.style.setProperty("--gy3", `${y3}%`);
+        el.style.setProperty("--gstrength", `${strengthRef.current}`);
       }
       raf = requestAnimationFrame(animate);
     };
     raf = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(raf);
   }, []);
-  
+
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
-    const onMove = (ev: MouseEvent) => {
+    const onMove = (ev: PointerEvent) => {
+      if (ev.pointerType !== "mouse") return;
+
+      setHasMouse(true);
       const rect = el.getBoundingClientRect();
       const x = ev.clientX - rect.left;
       const y = ev.clientY - rect.top;
@@ -86,11 +88,11 @@ export default function Hero({
       setIsHovered(false);
       strengthRef.current = 0.7;
     };
-    el.addEventListener("mousemove", onMove);
-    el.addEventListener("mouseleave", onLeave);
+    el.addEventListener("pointermove", onMove);
+    el.addEventListener("pointerleave", onLeave);
     return () => {
-      el.removeEventListener("mousemove", onMove);
-      el.removeEventListener("mouseleave", onLeave);
+      el.removeEventListener("pointermove", onMove);
+      el.removeEventListener("pointerleave", onLeave);
     };
   }, []);
 
@@ -181,7 +183,7 @@ export default function Hero({
               </span>
             </h1>
             <span className="block mt-10 md:text-lg">
-              Ti senti <span className='font-bold'>bloccatə?</span> <br />
+              Ti senti <span className="font-bold">bloccatə?</span> <br />
               Allora è il momento giusto: ritrova te stessə e prendi in mano la
               tua vita. Muoviti verso i tuoi obiettivi, cambia il passo!
             </span>
@@ -238,8 +240,8 @@ export default function Hero({
         </div>
       </div>
 
-      {/* Hover overlay: 64x64 circle following cursor */}
-      {isHovered && (
+      {/* Hover overlay: 64x64 circle following cursor (mouse devices only) */}
+      {isHovered && hasMouse && (
         <div
           className="absolute pointer-events-none z-10 transition-transform duration-200 "
           style={{
@@ -284,5 +286,3 @@ export default function Hero({
     </section>
   );
 }
-
-
