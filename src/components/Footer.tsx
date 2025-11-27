@@ -23,7 +23,7 @@ export default function Footer() {
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             {/* WhatsApp */}
             <Link
-              href="https://wa.link/kzwss9"
+              href="https://wa.me/393897952996?text=Ciao%20Giulia,%20arrivo%20dal%20tuo%20sito"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-3 bg-[#25D366] text-white px-6 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"

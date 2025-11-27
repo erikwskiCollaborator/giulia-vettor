@@ -23,7 +23,6 @@ export default function CheckoutForm({
   }, [preselectedPackageId]);
   const [customerName, setCustomerName] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
-  const [notes, setNotes] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -75,9 +74,6 @@ export default function CheckoutForm({
             name: customerName,
             email: customerEmail,
           },
-          metadata: {
-            notes: notes.trim() || undefined,
-          },
         }),
       });
 
@@ -103,7 +99,7 @@ export default function CheckoutForm({
   return (
     <section
       id="checkout"
-      className="relative bg-gradient-to-b from-gray-50 via-white to-gray-50 py-16 sm:py-24"
+      className="relative bg-gradient-to-b from-gray-50 via-white to-gray-50 py-16 sm:py-24 min-h-[100vh]"
     >
       <div className="mx-auto max-w-5xl px-6 lg:px-8">
         <div className="mb-12 text-center">
@@ -111,9 +107,8 @@ export default function CheckoutForm({
             Prenota il tuo percorso
           </h2>
           <p className="mt-4 text-gray-600 text-base sm:text-lg max-w-3xl mx-auto">
-            Seleziona il programma che preferisci, aggiungi qualche nota se lo
-            ritieni opportuno e completa il checkout sicuro con Stripe.
-            Riceverai subito la conferma d&apos;ordine.
+            Seleziona il programma che preferisci e completa il checkout sicuro
+            con Stripe. Riceverai subito la conferma d&apos;ordine.
           </p>
         </div>
 
@@ -173,21 +168,6 @@ export default function CheckoutForm({
                   })}
                 </div>
               </fieldset>
-
-              <div className="space-y-4">
-                <label className="block">
-                  <span className="text-sm font-semibold text-gray-900">
-                    Note opzionali
-                  </span>
-                  <textarea
-                    value={notes}
-                    onChange={(event) => setNotes(event.target.value)}
-                    rows={3}
-                    placeholder="Dimmi qualcosa su di te, sui tuoi obiettivi o eventuali limitazioni."
-                    className="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
-                  />
-                </label>
-              </div>
             </div>
 
             <div className="space-y-8 rounded-3xl border border-gray-200 bg-gray-50/60 p-6">

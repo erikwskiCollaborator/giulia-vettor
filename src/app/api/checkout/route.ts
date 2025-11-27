@@ -19,8 +19,6 @@ export async function POST(request: Request) {
         name?: string;
         email?: string;
       };
-      preferences?: Record<string, boolean>;
-      notes?: string;
     };
 
     const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
@@ -63,17 +61,6 @@ export async function POST(request: Request) {
       if (body.customer?.name) {
         metadata.customerName = body.customer.name;
       }
-
-      if (body.preferences && typeof body.preferences === 'object') {
-        Object.entries(body.preferences).forEach(([key, value]) => {
-          metadata[`pref_${key}`] = value ? 'true' : 'false';
-        });
-      }
-
-      if (body.notes) {
-        metadata.notes = body.notes.slice(0, 500);
-      }
-
       const email = body.customer?.email?.trim();
       if (email) {
         customerEmail = email;
