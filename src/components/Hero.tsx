@@ -218,7 +218,7 @@ export default function Hero({ onCtaClick }: HeroProps) {
           </div>
 
           {/* Transparent photo placeholder (no src set yet) */}
-          <div className="relative flex items-center justify-center mt-8 lg:mt-0">
+          <div className="relative flex items-center justify-center mt-8 lg:mt-0 translate-y-10">
             <div
               aria-label="Foto atleta"
               role="img"
@@ -229,11 +229,11 @@ export default function Hero({ onCtaClick }: HeroProps) {
               }}
             />
             <Image
-              src="/images/hero.png"
+              src="/images/hero2.png"
               alt="Hero Image"
               width={200} // fallback for SSR
               height={100} // fallback for SSR
-              className="absolute top-[-25%] h-[150%]  w-auto mb-6"
+              className="absolute top-[-50%] h-[150%]  w-auto mb-6"
               priority
             />
           </div>
