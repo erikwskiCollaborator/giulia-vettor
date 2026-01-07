@@ -3,6 +3,7 @@ export type CoachingPackage = {
   name: string;
   subtitle: string;
   price: number; // Euro price displayed to users
+  stripePriceId?: string; // Stripe Price ID (e.g., price_xxxxx) - required for coupons to work
   features: string[];
   highlight?: boolean;
   note?: string;
@@ -15,6 +16,7 @@ export const COACHING_PACKAGES: CoachingPackage[] = [
     name: "COACHING DI CORSA",
     subtitle: "MENSILE",
     price: 69,
+    stripePriceId: "price_1Sn3AvQr5fjk3ZxjEp5Qk6L4",
     crossSellForza: true,
     features: [
       "4 settimane di allenamenti di corsa personalizzati",
@@ -26,6 +28,7 @@ export const COACHING_PACKAGES: CoachingPackage[] = [
     name: "COACHING DI CORSA",
     subtitle: "QUADRIMESTRALE",
     price: 239,
+    stripePriceId: "price_1Sn3AtQr5fjk3Zxjlqr84S5K",
     crossSellForza: true,
     features: [
       "16 settimane di allenamenti di corsa personalizzati",
@@ -41,6 +44,7 @@ export const COACHING_PACKAGES: CoachingPackage[] = [
     name: "PROGRAMMA",
     subtitle: "DI FORZA",
     price: 59,
+    stripePriceId: "price_1Sn3ArQr5fjk3ZxjAthoX1FK",
     features: [
       "4 settimane di allenamenti di forza",
       "Mobilità e stretching personalizzati",
@@ -55,6 +59,7 @@ export const COACHING_PACKAGES: CoachingPackage[] = [
     name: "CONSULENZA PEDAGOGICA",
     subtitle: "SPORTIVA",
     price: 69,
+    stripePriceId: "price_1Sn3AnQr5fjk3Zxj4fGIK29h",
     features: [
       "1 colloquio di 50'",
       "Disposizione di strategie funzionali",

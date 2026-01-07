@@ -59,16 +59,25 @@ export async function POST(request: Request) {
           );
         }
 
-        lineItems.push({
-          price_data: {
-            currency: "eur",
-            unit_amount: Math.round(selectedPackage.price * 100),
-            product_data: {
-              name: `${selectedPackage.name} - ${selectedPackage.subtitle}`,
+        // Use Stripe Price ID if available (required for coupons to work with specific products)
+        // Fall back to price_data for development/testing
+        if (selectedPackage.stripePriceId) {
+          lineItems.push({
+            price: selectedPackage.stripePriceId,
+            quantity: 1,
+          });
+        } else {
+          lineItems.push({
+            price_data: {
+              currency: "eur",
+              unit_amount: Math.round(selectedPackage.price * 100),
+              product_data: {
+                name: `${selectedPackage.name} - ${selectedPackage.subtitle}`,
+              },
             },
-          },
-          quantity: 1,
-        });
+            quantity: 1,
+          });
+        }
 
         packageLabels.push(
           `${selectedPackage.name} ${selectedPackage.subtitle}`
