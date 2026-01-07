@@ -49,7 +49,7 @@ export default function TermsPage() {
                 Le presenti Condizioni Generali di Vendita disciplinano la
                 fornitura di servizi di coaching sportivo online erogati da{" "}
                 <strong>Giulia Vettor</strong>, con sede in Italia, Partita IVA
-                [da inserire], di seguito denominata &quot;il Coach&quot;.
+                04231400369, di seguito denominata &quot;il Coach&quot;.
               </p>
               <p className="mt-3">
                 L&apos;acquisto di uno qualsiasi dei servizi offerti comporta
@@ -462,7 +462,7 @@ export default function TermsPage() {
               </p>
               <ul className="list-none space-y-1 ml-4 mt-3">
                 <li>
-                  <strong>Email:</strong> [da inserire]
+                  <strong>Email:</strong> giulia.vettor.01.06.1994@gmail.com
                 </li>
                 <li>
                   <strong>WhatsApp:</strong> +39 389 795 2996

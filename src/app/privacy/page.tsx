@@ -61,7 +61,7 @@ export default function PrivacyPage() {
                 <p>
                   <strong>Giulia Vettor</strong>
                 </p>
-                <p>Partita IVA: [da inserire]</p>
+                <p>Partita IVA: 04231400369</p>
                 <p>Sede: Castelfranco Emilia (MO)</p>
                 <p>
                   Email:{" "}

@@ -8,16 +8,13 @@ import React, { useEffect, useState } from "react";
   - Fades out smoothly.
 */
 export interface LoadingOverlayProps {
-  images?: string[];           // image paths to preload (public/ relative starting with / )
-  minimumMs?: number;          // minimum time to show (avoid flash) default 600ms
-  timeoutMs?: number;          // max wait before forcing hide (default 5000ms)
-  onDone?: () => void;         // callback when overlay finishes
+  images?: string[]; // image paths to preload (public/ relative starting with / )
+  minimumMs?: number; // minimum time to show (avoid flash) default 600ms
+  timeoutMs?: number; // max wait before forcing hide (default 5000ms)
+  onDone?: () => void; // callback when overlay finishes
 }
 
-const defaultImages = [
-  "/images/white-logo.png",
-  "/images/hero-image.png"
-];
+const defaultImages = ["/images/white-logo.png", "/images/hero.png"];
 
 const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
   images = defaultImages,
@@ -81,10 +78,14 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
   return (
     <div
       aria-hidden={done}
-      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-primary text-white transition-opacity duration-400 ${done ? "opacity-0" : "opacity-100"}`}
+      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-primary text-white transition-opacity duration-400 ${
+        done ? "opacity-0" : "opacity-100"
+      }`}
     >
       <Spinner />
-      <p className="mt-6 text-sm tracking-wide uppercase opacity-70">Caricamento...</p>
+      <p className="mt-6 text-sm tracking-wide uppercase opacity-70">
+        Caricamento...
+      </p>
     </div>
   );
 };

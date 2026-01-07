@@ -229,11 +229,12 @@ export default function Hero({ onCtaClick }: HeroProps) {
               }}
             />
             <Image
-              src="/images/hero2.png"
+              src="/images/hero.png"
               alt="Hero Image"
-              width={200} // fallback for SSR
-              height={100} // fallback for SSR
-              className="absolute top-[-50%] h-[150%]  w-auto mb-6"
+              width={500}
+              height={630}
+              sizes="(max-width: 1024px) 450px, 630px"
+              className="absolute top-[-35%] md:top-[-50%] h-[135%] md:h-[150%] w-auto mb-6 md:min-w[500px]"
               priority
             />
           </div>

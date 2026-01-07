@@ -39,7 +39,7 @@ export default function CheckoutForm({
   const [ibanCopied, setIbanCopied] = useState(false);
   const [addForzaPackage, setAddForzaPackage] = useState(false);
 
-  const iban = "IT00 X000 0000 0000 0000 0000 000";
+  const iban = "IT22 B053 8766 6900 0000 2913 240";
 
   const copyIban = () => {
     navigator.clipboard.writeText(iban.replace(/\s/g, ""));

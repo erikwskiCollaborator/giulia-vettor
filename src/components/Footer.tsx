@@ -121,7 +121,7 @@ export default function Footer() {
               <h3 className="text-lg font-bold mb-4">Contatti</h3>
               <ul className="space-y-2 text-sm text-white/80">
                 <li>Tel: +39 389 795 2996</li>
-                <li>P.IVA: [da inserire]</li>
+                <li>P.IVA: 04231400369</li>
                 <li>Sede: Italia</li>
               </ul>
             </div>
