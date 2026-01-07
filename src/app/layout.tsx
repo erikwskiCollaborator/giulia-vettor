@@ -3,6 +3,7 @@ import { Figtree, Montserrat } from "next/font/google";
 import "./globals.css";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import CookieBanner from "@/components/CookieBanner";
+import ClarityAnalytics from "@/components/ClarityAnalytics";
 
 const figtree = Figtree({
   subsets: ["latin"],
@@ -107,6 +108,7 @@ export default function RootLayout({
       <body
         className={`${figtree.variable} ${montserrat.variable} antialiased relative`}
       >
+        <ClarityAnalytics />
         <LoadingOverlay />
         <CookieBanner />
         {children}
