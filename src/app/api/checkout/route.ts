@@ -125,6 +125,21 @@ export async function POST(request: Request) {
       shipping_address_collection: {
         allowed_countries: ["IT", "US", "GB", "FR", "DE", "ES"],
       },
+      custom_fields: [
+        {
+          key: "codice_fiscale",
+          label: {
+            type: "custom",
+            custom: "Codice Fiscale",
+          },
+          type: "text",
+          optional: false,
+          text: {
+            minimum_length: 11, // Partita IVA (11) o Codice Fiscale (16)
+            maximum_length: 16,
+          },
+        },
+      ],
       metadata: Object.keys(metadata).length ? metadata : undefined,
     });
 

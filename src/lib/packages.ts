@@ -16,6 +16,7 @@ export const COACHING_PACKAGES: CoachingPackage[] = [
     name: "COACHING DI CORSA",
     subtitle: "MENSILE",
     price: 69,
+    // stripePriceId: "price_1SRwumQwBkdrwsKrJLfja8u2", ! debugging priceId
     stripePriceId: "price_1Sn3AvQr5fjk3ZxjEp5Qk6L4",
     crossSellForza: true,
     features: [
