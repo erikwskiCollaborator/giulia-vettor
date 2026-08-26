@@ -112,11 +112,6 @@ export default function TermsPage() {
                   allenamenti di forza, mobilità e stretching personalizzati, 1
                   call iniziale e 4 feedback su richiesta.
                 </li>
-                <li>
-                  <strong>Consulenza Pedagogica Sportiva</strong>: 1 colloquio
-                  di 50 minuti con disposizione di strategie funzionali e 1
-                  feedback di supporto.
-                </li>
               </ul>
               <p className="mt-4">
                 I contenuti vengono forniti in formato digitale (PDF, messaggi,

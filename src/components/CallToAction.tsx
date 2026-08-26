@@ -12,7 +12,10 @@ type CallToActionProps = {
 export default function CallToAction({ onCtaClick }: CallToActionProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <section className="relative bg-gradient-to-br from-gray-900 via-primary/95 to-gray-900 py-16 sm:py-24 overflow-hidden">
+    <section
+      id="domande"
+      className="relative bg-gradient-to-br from-gray-900 via-primary/95 to-gray-900 py-16 sm:py-24 overflow-hidden"
+    >
       {/* Decorative gradient blobs */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-secondary/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/30 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>

@@ -1,7 +1,16 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function SuccessPage() {
+function SuccessContent() {
+  const searchParams = useSearchParams();
+  const fallbackUrl = searchParams.get("fallbackUrl");
+
+  const homeUrl = fallbackUrl || "/";
+
   return (
     <main className="flex min-h-screen items-center justify-center bg-white px-6 py-24">
       <div className="max-w-xl text-center">
@@ -35,12 +44,26 @@ export default function SuccessPage() {
           </Link>
           <a
             className="inline-flex rounded-md bg-black px-6 py-3 text-white hover:bg-gray-800"
-            href="/"
+            href={homeUrl}
           >
-            Torna alla home
+            {fallbackUrl ? "Torna al sito" : "Torna alla home"}
           </a>
         </div>
       </div>
     </main>
+  );
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex min-h-screen items-center justify-center bg-white">
+          <p className="text-gray-600">Caricamento...</p>
+        </main>
+      }
+    >
+      <SuccessContent />
+    </Suspense>
   );
 }

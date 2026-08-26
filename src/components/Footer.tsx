@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <>
       {/* Contact Section */}
-      <section className="bg-white py-16 sm:py-24">
+      <section id="footer" className="bg-white py-16 sm:py-24">
         <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center">
           <h2 className="text-4xl sm:text-5xl font-extrabold mb-6">
             <span className="text-primary">Parliamone </span>

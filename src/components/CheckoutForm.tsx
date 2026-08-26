@@ -2,7 +2,25 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import Button from "./Button";
-import { COACHING_PACKAGES, packagesById } from "@/lib/packages";
+import {
+  COACHING_PACKAGES,
+  packagesById,
+  CoachingPackage,
+} from "@/lib/packages";
+
+type PackageCategory = "forza" | "corsa-forza" | "return-to-run";
+
+const CATEGORY_LABELS: Record<PackageCategory, string> = {
+  forza: "FORZA",
+  "corsa-forza": "CORSA + FORZA",
+  "return-to-run": "RETURN TO RUN",
+};
+
+function getPackageCategory(pkg: CoachingPackage): PackageCategory {
+  if (pkg.id === "return-to-run") return "return-to-run";
+  if (pkg.id.startsWith("corsa-forza")) return "corsa-forza";
+  return "forza";
+}
 
 type CheckoutFormProps = {
   preselectedPackageId?: string | null;
@@ -11,22 +29,56 @@ type CheckoutFormProps = {
 export default function CheckoutForm({
   preselectedPackageId = null,
 }: CheckoutFormProps) {
+  // Determine initial category based on preselected package
+  const getInitialCategory = (): PackageCategory => {
+    if (preselectedPackageId) {
+      const pkg = packagesById[preselectedPackageId];
+      if (pkg) return getPackageCategory(pkg);
+    }
+    return "forza";
+  };
+
+  const [selectedCategory, setSelectedCategory] =
+    useState<PackageCategory>(getInitialCategory);
+
+  // Filter packages by category
+  const filteredPackages = useMemo(() => {
+    return COACHING_PACKAGES.filter(
+      (pkg) => getPackageCategory(pkg) === selectedCategory,
+    );
+  }, [selectedCategory]);
+
   const [selectedPackageId, setSelectedPackageId] = useState<string | null>(
-    preselectedPackageId ?? COACHING_PACKAGES[0]?.id ?? null
+    preselectedPackageId ?? filteredPackages[0]?.id ?? null,
   );
 
-  // Update selected package when preselectedPackageId changes
+  // Update category and package when preselectedPackageId changes
   useEffect(() => {
     if (preselectedPackageId) {
-      setSelectedPackageId(preselectedPackageId);
+      const pkg = packagesById[preselectedPackageId];
+      if (pkg) {
+        setSelectedCategory(getPackageCategory(pkg));
+        setSelectedPackageId(preselectedPackageId);
+      }
     }
   }, [preselectedPackageId]);
 
-  // Reset forza add-on when switching to a package without crossSellForza
+  // When category changes, select first package of that category
+  useEffect(() => {
+    const firstPackage = filteredPackages[0];
+    if (
+      firstPackage &&
+      !filteredPackages.some((p) => p.id === selectedPackageId)
+    ) {
+      setSelectedPackageId(firstPackage.id);
+    }
+  }, [selectedCategory, filteredPackages, selectedPackageId]);
+
+  // Reset upsell add-on when switching to a package without crossSellId
   useEffect(() => {
     const pkg = selectedPackageId ? packagesById[selectedPackageId] : undefined;
-    if (!pkg?.crossSellForza) {
-      setAddForzaPackage(false);
+    if (!pkg?.crossSellId) {
+      setAddUpsellPackage(false);
     }
   }, [selectedPackageId]);
 
@@ -37,7 +89,7 @@ export default function CheckoutForm({
   const [error, setError] = useState<string | null>(null);
   const [showBankTransfer, setShowBankTransfer] = useState(false);
   const [ibanCopied, setIbanCopied] = useState(false);
-  const [addForzaPackage, setAddForzaPackage] = useState(false);
+  const [addUpsellPackage, setAddUpsellPackage] = useState(false);
 
   const iban = "IT22 B053 8766 6900 0000 2913 240";
 
@@ -49,13 +101,18 @@ export default function CheckoutForm({
 
   const selectedPackage = useMemo(
     () => (selectedPackageId ? packagesById[selectedPackageId] : undefined),
-    [selectedPackageId]
+    [selectedPackageId],
   );
 
-  const forzaPackage = packagesById["forza"];
+  // Get upsell package based on selected package's crossSellId
+  const upsellPackage = useMemo(() => {
+    if (!selectedPackage?.crossSellId) return undefined;
+    return packagesById[selectedPackage.crossSellId];
+  }, [selectedPackage]);
+
   const totalAmount =
     (selectedPackage?.price ?? 0) +
-    (addForzaPackage ? forzaPackage?.price ?? 0 : 0);
+    (addUpsellPackage ? (upsellPackage?.price ?? 0) : 0);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -83,8 +140,8 @@ export default function CheckoutForm({
         },
         body: JSON.stringify({
           packageIds:
-            addForzaPackage && forzaPackage
-              ? [selectedPackage.id, forzaPackage.id]
+            addUpsellPackage && upsellPackage
+              ? [selectedPackage.id, upsellPackage.id]
               : [selectedPackage.id],
           customer: {
             name: customerName,
@@ -112,6 +169,15 @@ export default function CheckoutForm({
     }
   };
 
+  // Determine upsell label based on package type
+  const getUpsellLabel = () => {
+    if (!upsellPackage) return "";
+    const isCorsa = selectedPackage?.id.startsWith("corsa");
+    return isCorsa
+      ? `Potenzia con ${upsellPackage.name}`
+      : `Completa con ${upsellPackage.name}`;
+  };
+
   return (
     <section
       id="checkout"
@@ -133,13 +199,35 @@ export default function CheckoutForm({
           className="rounded-3xl border border-gray-200 bg-white p-6 sm:p-10 shadow-2xl shadow-primary/5"
         >
           <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-            <div className="space-y-8">
+            <div className="space-y-8 max-w-full">
+              {/* Category Select */}
+              <div>
+                <label className="text-lg font-semibold text-gray-900 block mb-3">
+                  Seleziona la tipologia
+                </label>
+                <select
+                  value={selectedCategory}
+                  onChange={(e) =>
+                    setSelectedCategory(e.target.value as PackageCategory)
+                  }
+                  className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-900 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+                >
+                  {(Object.keys(CATEGORY_LABELS) as PackageCategory[]).map(
+                    (cat) => (
+                      <option key={cat} value={cat}>
+                        {CATEGORY_LABELS[cat]}
+                      </option>
+                    ),
+                  )}
+                </select>
+              </div>
+
               <fieldset>
                 <legend className="text-lg font-semibold text-gray-900">
                   Scegli il pacchetto
                 </legend>
                 <div className="mt-4 grid gap-4">
-                  {COACHING_PACKAGES.map((pkg) => {
+                  {filteredPackages.map((pkg) => {
                     const isSelected = selectedPackageId === pkg.id;
                     return (
                       <label
@@ -185,26 +273,26 @@ export default function CheckoutForm({
                 </div>
               </fieldset>
 
-              {selectedPackage?.crossSellForza && forzaPackage && (
+              {selectedPackage?.crossSellId && upsellPackage && (
                 <div className="rounded-2xl border-2 border-secondary/20 bg-secondary/5 p-5 space-y-3">
                   <label className="flex items-start gap-3 cursor-pointer">
                     <input
                       type="checkbox"
-                      checked={addForzaPackage}
-                      onChange={(e) => setAddForzaPackage(e.target.checked)}
+                      checked={addUpsellPackage}
+                      onChange={(e) => setAddUpsellPackage(e.target.checked)}
                       className="mt-1 h-5 w-5 accent-secondary"
                     />
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
+                      <div className="flex items-center flex-wrap gap-2 mb-1">
                         <span className="text-base font-bold text-gray-900">
-                          Aggiungi {forzaPackage.name} - {forzaPackage.subtitle}
+                          {getUpsellLabel()} - {upsellPackage.subtitle}
                         </span>
-                        <span className="rounded-full bg-secondary/20 px-3 py-1 text-xs font-semibold text-secondary">
-                          +€{forzaPackage.price}
+                        <span className="rounded-full bg-secondary/20 px-2 py-1 text-xs font-semibold text-secondary">
+                          +€{upsellPackage.price}
                         </span>
                       </div>
                       <p className="text-sm text-gray-600">
-                        {forzaPackage.features[0]}
+                        {upsellPackage.features[0]}
                       </p>
                     </div>
                   </label>
@@ -307,14 +395,12 @@ export default function CheckoutForm({
 
               <Button
                 type="submit"
+                disabled={isSubmitting}
                 size="xl"
                 variant="secondary"
-                disabled={isSubmitting}
                 className="w-full justify-center bg-secondary hover:bg-secondary/90 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {isSubmitting
-                  ? "Reindirizzamento in corso…"
-                  : "Procedi al pagamento"}
+                {isSubmitting ? "Elaborazione..." : "Procedi al Pagamento"}
               </Button>
 
               <p className="text-xs text-gray-400">

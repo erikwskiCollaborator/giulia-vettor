@@ -1,6 +1,15 @@
-import Image from "next/image";
+"use client";
 
-export default function CancelPage() {
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+
+function CancelContent() {
+  const searchParams = useSearchParams();
+  const fallbackUrl = searchParams.get("fallbackUrl");
+
+  const homeUrl = fallbackUrl || "/";
+
   return (
     <main className="flex min-h-screen items-center justify-center bg-white px-6 py-24">
       <div className="max-w-xl text-center">
@@ -23,12 +32,26 @@ export default function CancelPage() {
         <div className="mt-8">
           <a
             className="inline-flex rounded-md bg-black px-6 py-3 text-white hover:bg-gray-800"
-            href="/"
+            href={homeUrl}
           >
-            Torna alla home
+            {fallbackUrl ? "Torna al sito" : "Torna alla home"}
           </a>
         </div>
       </div>
     </main>
+  );
+}
+
+export default function CancelPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex min-h-screen items-center justify-center bg-white">
+          <p className="text-gray-600">Caricamento...</p>
+        </main>
+      }
+    >
+      <CancelContent />
+    </Suspense>
   );
 }

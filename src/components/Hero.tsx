@@ -98,6 +98,7 @@ export default function Hero({ onCtaClick }: HeroProps) {
 
   return (
     <section
+      id="home"
       ref={containerRef}
       className="relative isolate overflow-hidden min-h-[100vh] cursor-none"
       style={

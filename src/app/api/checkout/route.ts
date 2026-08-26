@@ -16,7 +16,7 @@ export async function POST(request: Request) {
 
     const body = (await request
       .json()
-      .catch(() => ({} as Record<string, unknown>))) as {
+      .catch(() => ({}) as Record<string, unknown>)) as {
       priceId?: string;
       quantity?: number;
       packageId?: string;
@@ -25,13 +25,16 @@ export async function POST(request: Request) {
         name?: string;
         email?: string;
       };
+      referralName?: string;
+      fallbackUrl?: string;
+      source?: string; // 'referral' or 'website'
     };
 
     const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
     if (!stripeSecretKey) {
       return NextResponse.json(
         { error: "Missing STRIPE_SECRET_KEY. Add it to your environment." },
-        { status: 500 }
+        { status: 500 },
       );
     }
     const stripe = new Stripe(stripeSecretKey);
@@ -44,8 +47,8 @@ export async function POST(request: Request) {
     const packageIds = Array.isArray(body.packageIds)
       ? body.packageIds
       : typeof body.packageId === "string"
-      ? [body.packageId]
-      : [];
+        ? [body.packageId]
+        : [];
 
     if (packageIds.length > 0) {
       const packageLabels: string[] = [];
@@ -55,7 +58,7 @@ export async function POST(request: Request) {
         if (!selectedPackage) {
           return NextResponse.json(
             { error: `Pacchetto "${pkgId}" non valido.` },
-            { status: 400 }
+            { status: 400 },
           );
         }
 
@@ -80,12 +83,17 @@ export async function POST(request: Request) {
         }
 
         packageLabels.push(
-          `${selectedPackage.name} ${selectedPackage.subtitle}`
+          `${selectedPackage.name} ${selectedPackage.subtitle}`,
         );
       }
 
       metadata.packageIds = packageIds.join(",");
       metadata.packageLabel = packageLabels.join(" + ");
+
+      // Add referral name to metadata if present
+      if (body.referralName) {
+        metadata.convertedFrom = body.referralName;
+      }
 
       if (body.customer?.name) {
         metadata.customerName = body.customer.name;
@@ -105,7 +113,7 @@ export async function POST(request: Request) {
           {
             error: "Missing priceId. Set STRIPE_PRICE_ID or send { priceId }.",
           },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
@@ -115,13 +123,38 @@ export async function POST(request: Request) {
       });
     }
 
+    // Determine source and fallback URL for redirect URLs
+    const source = body.source || "website";
+    const fallbackUrl = body.fallbackUrl
+      ? encodeURIComponent(body.fallbackUrl)
+      : "";
+    const referralName = body.referralName
+      ? encodeURIComponent(body.referralName)
+      : "";
+
+    // Build query params for success/cancel URLs
+    const successParams = new URLSearchParams({
+      session_id: "{CHECKOUT_SESSION_ID}",
+      source,
+    });
+    const cancelParams = new URLSearchParams({ source });
+
+    if (fallbackUrl) {
+      successParams.set("fallbackUrl", body.fallbackUrl!);
+      cancelParams.set("fallbackUrl", body.fallbackUrl!);
+    }
+    if (referralName) {
+      successParams.set("referralName", body.referralName!);
+      cancelParams.set("referralName", body.referralName!);
+    }
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items: lineItems,
       customer_email: customerEmail,
-      success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/cancel`,
-      allow_promotion_codes: true,
+      success_url: `${baseUrl}/success?${successParams.toString()}`,
+      cancel_url: `${baseUrl}/cancel?${cancelParams.toString()}`,
+      allow_promotion_codes: false,
       shipping_address_collection: {
         allowed_countries: ["IT", "US", "GB", "FR", "DE", "ES"],
       },
@@ -141,6 +174,9 @@ export async function POST(request: Request) {
         },
       ],
       metadata: Object.keys(metadata).length ? metadata : undefined,
+      payment_intent_data: Object.keys(metadata).length
+        ? { metadata }
+        : undefined,
     });
 
     return NextResponse.json({ id: session.id, url: session.url });

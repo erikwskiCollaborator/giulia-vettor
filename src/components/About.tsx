@@ -101,6 +101,12 @@ export default function About({ onCtaClick }: AboutProps) {
                       <li>Scienze dell&apos;educazione</li>
                     </ul>
                   </div>
+                  <div className="mt-2 pt-2 border-t border-primary/20">
+                    <span className="font-semibold text-secondary">
+                      Master I Livello:{" "}
+                    </span>
+                    <p>Psicologia dello Sport</p>
+                  </div>
                 </div>
               </div>
             </div>
