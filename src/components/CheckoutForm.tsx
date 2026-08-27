@@ -257,7 +257,7 @@ export default function CheckoutForm({
                             </span>
                           </span>
                           <span className="mt-1 block text-sm text-gray-600">
-                            {pkg.features[0]}
+                            {pkg.features[0].text}
                             {pkg.highlight ? " • Programma consigliato" : ""}
                           </span>
                           <span className="mt-2 inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
@@ -292,7 +292,7 @@ export default function CheckoutForm({
                         </span>
                       </div>
                       <p className="text-sm text-gray-600">
-                        {upsellPackage.features[0]}
+                        {upsellPackage.features[0].text}
                       </p>
                     </div>
                   </label>

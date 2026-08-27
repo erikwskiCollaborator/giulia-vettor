@@ -41,13 +41,18 @@ function getPriceId(packageId: string): string | undefined {
 export type BillingPeriod = "mensile" | "quadrimestrale";
 export type Tier = "standard" | "personalizzato";
 
+export type Feature = {
+  text: string;
+  multiplied?: boolean;
+};
+
 export type CoachingPackage = {
   id: string;
   name: string;
   subtitle: string;
   price: number; // Euro price displayed to users
   stripePriceId?: string; // Stripe Price ID (e.g., price_xxxxx) - required for coupons to work
-  features: string[];
+  features: Feature[];
   highlight?: boolean;
   note?: string;
   billingPeriod?: BillingPeriod; // Periodo di fatturazione (mensile/quadrimestrale)
@@ -70,14 +75,14 @@ export const FORZA_PACKAGES: Record<
       billingPeriod: "mensile",
       tier: "standard",
       features: [
-        "Esercizi di mobilità fondamentali per la corsa",
-        "Andature di tecnica di corsa",
-        "Esercizi di core",
-        "Esercizi di forza",
-        "Esercizi di stretching e rilassamento",
-        "Schede progressive in complessità e carico",
-        "1 call iniziale di 40'",
-        "Feedback e correzioni degli esercizi (su richiesta)",
+        { text: "Esercizi di mobilità fondamentali per la corsa" },
+        { text: "Andature di tecnica di corsa" },
+        { text: "Esercizi di core" },
+        { text: "Esercizi di forza" },
+        { text: "Esercizi di stretching e rilassamento" },
+        { text: "Schede progressive in complessità e carico" },
+        { text: "1 call iniziale di 40'" },
+        { text: "Feedback e correzioni degli esercizi (su richiesta)" },
       ],
     },
     quadrimestrale: {
@@ -90,15 +95,15 @@ export const FORZA_PACKAGES: Record<
       tier: "standard",
       highlight: true,
       features: [
-        "Esercizi di mobilità fondamentali per la corsa",
-        "Andature di tecnica di corsa",
-        "Esercizi di core",
-        "Esercizi di forza",
-        "Esercizi di stretching e rilassamento",
-        "Schede progressive in complessità e carico",
-        "1 call iniziale di 40'",
-        "1 call di 20' prima di ogni nuovo mesociclo",
-        "Feedback e correzioni degli esercizi (su richiesta)",
+        { text: "Esercizi di mobilità fondamentali per la corsa" },
+        { text: "Andature di tecnica di corsa" },
+        { text: "Esercizi di core" },
+        { text: "Esercizi di forza" },
+        { text: "Esercizi di stretching e rilassamento" },
+        { text: "Schede progressive in complessità e carico" },
+        { text: "1 call iniziale di 40'" },
+        { text: "1 call di 20' prima di ogni nuovo mesociclo" },
+        { text: "Feedback e correzioni degli esercizi (su richiesta)" },
       ],
     },
   },
@@ -112,13 +117,13 @@ export const FORZA_PACKAGES: Record<
       billingPeriod: "mensile",
       tier: "personalizzato",
       features: [
-        "4 settimane di allenamenti di forza",
-        "Mobilità e stretching personalizzati",
-        "1 circuito di pliometria personalizzato",
-        "1 circuito di core personalizzato",
-        "1 circuito di forza personalizzato",
-        "1 call iniziale di 40'",
-        "Feedback e correzioni degli esercizi (su richiesta)",
+        { text: "4 settimane di allenamenti di forza" },
+        { text: "Mobilità e stretching personalizzati" },
+        { text: "1 circuito di pliometria personalizzato" },
+        { text: "1 circuito di core personalizzato" },
+        { text: "1 circuito di forza personalizzato" },
+        { text: "1 call iniziale di 40'" },
+        { text: "Feedback e correzioni degli esercizi (su richiesta)" },
       ],
     },
     quadrimestrale: {
@@ -131,14 +136,14 @@ export const FORZA_PACKAGES: Record<
       tier: "personalizzato",
       highlight: true,
       features: [
-        "16 settimane di allenamenti di forza",
-        "Mobilità e stretching personalizzati",
-        "4 circuiti di pliometria personalizzati",
-        "4 circuiti di core personalizzati",
-        "4 circuiti di forza personalizzati",
-        "1 call iniziale di 40'",
-        "1 call di 20' prima di ogni nuovo mesociclo",
-        "Feedback e correzioni degli esercizi (su richiesta)",
+        { text: "4 settimane di allenamenti di forza", multiplied: true },
+        { text: "Mobilità e stretching personalizzati" },
+        { text: "1 circuito di pliometria personalizzato", multiplied: true },
+        { text: "1 circuito di core personalizzato", multiplied: true },
+        { text: "1 circuito di forza personalizzato", multiplied: true },
+        { text: "1 call iniziale di 40'" },
+        { text: "1 call di 20' prima di ogni nuovo mesociclo" },
+        { text: "Feedback e correzioni degli esercizi (su richiesta)" },
       ],
     },
   },
@@ -159,13 +164,13 @@ export const CORSA_FORZA_PACKAGES: Record<
       billingPeriod: "mensile",
       tier: "standard",
       features: [
-        "4 settimane di allenamenti di corsa personalizzati",
-        "1 circuito di mobilità progressiva",
-        "1 circuito di stretching progressivo",
-        "1 circuito di core progressivo",
-        "1 circuito di forza progressivo",
-        "1 call iniziale",
-        "1 feedback a settimana sugli allenamenti",
+        { text: "4 settimane di allenamenti di corsa personalizzati" },
+        { text: "1 circuito di mobilità progressiva" },
+        { text: "1 circuito di stretching progressivo" },
+        { text: "1 circuito di core progressivo" },
+        { text: "1 circuito di forza progressivo" },
+        { text: "1 call iniziale" },
+        { text: "1 feedback a settimana sugli allenamenti" },
       ],
     },
     quadrimestrale: {
@@ -178,14 +183,17 @@ export const CORSA_FORZA_PACKAGES: Record<
       tier: "standard",
       highlight: true,
       features: [
-        "16 settimane di allenamenti di corsa personalizzati",
-        "4 circuiti di mobilità progressiva",
-        "4 circuiti di stretching progressivo",
-        "4 circuiti di core progressivi",
-        "4 circuiti di forza progressivi",
-        "1 call iniziale di 40'",
-        "1 call intermedia di 20'",
-        "1 feedback a settimana sugli allenamenti",
+        {
+          text: "4 settimane di allenamenti di corsa personalizzati",
+          multiplied: true,
+        },
+        { text: "1 circuito di mobilità progressiva", multiplied: true },
+        { text: "1 circuito di stretching progressivo", multiplied: true },
+        { text: "1 circuito di core progressivo", multiplied: true },
+        { text: "1 circuito di forza progressivo", multiplied: true },
+        { text: "1 call iniziale di 40'" },
+        { text: "1 call intermedia di 20'" },
+        { text: "1 feedback a settimana sugli allenamenti" },
       ],
     },
   },
@@ -200,15 +208,18 @@ export const CORSA_FORZA_PACKAGES: Record<
       billingPeriod: "quadrimestrale",
       tier: "personalizzato",
       features: [
-        "16 settimane di allenamenti di corsa personalizzati",
-        "Mobilità personalizzata",
-        "Stretching personalizzato",
-        "4 circuiti di pliometria personalizzati",
-        "4 circuiti di core personalizzati",
-        "4 circuiti di forza personalizzati",
-        "1 call iniziale di 40'",
-        "1 call di 20' ogni nuovo mesociclo",
-        "1 feedback a settimana sugli allenamenti",
+        {
+          text: "4 settimane di allenamenti di corsa personalizzati",
+          multiplied: true,
+        },
+        { text: "Mobilità personalizzata" },
+        { text: "Stretching personalizzato" },
+        { text: "1 circuito di pliometria personalizzato", multiplied: true },
+        { text: "1 circuito di core personalizzato", multiplied: true },
+        { text: "1 circuito di forza personalizzato", multiplied: true },
+        { text: "1 call iniziale di 40'" },
+        { text: "1 call di 20' ogni nuovo mesociclo" },
+        { text: "1 feedback a settimana sugli allenamenti" },
       ],
     },
   },
@@ -223,12 +234,18 @@ export const RETURN_TO_RUN: CoachingPackage = {
   stripePriceId: getPriceId("return-to-run"),
   billingPeriod: "quadrimestrale",
   features: [
-    "4 programmazioni progressive di bici e nuoto per mantenere il condizionamento aerobico",
-    "Scheda di forza e mobilità funzionale specifica per il tuo infortunio",
-    "Test di carico progressivo per il rientro graduale (Run/Walk protocol)",
-    "Supporto chat prioritario: risposta entro 72h",
-    "1 call iniziale di 45'",
-    "3 call intermedie di 25' prima di ogni nuovo mesociclo",
+    {
+      text: "4 programmazioni progressive di bici e nuoto per mantenere il condizionamento aerobico",
+    },
+    {
+      text: "Scheda di forza e mobilità funzionale specifica per il tuo infortunio",
+    },
+    {
+      text: "Test di carico progressivo per il rientro graduale (Run/Walk protocol)",
+    },
+    { text: "Supporto chat prioritario: risposta entro 72h" },
+    { text: "1 call iniziale di 45'" },
+    { text: "3 call intermedie di 25' prima di ogni nuovo mesociclo" },
   ],
 };
 

@@ -210,12 +210,23 @@ function PackageCard({
                   clipRule="evenodd"
                 />
               </svg>
+              {feature.multiplied && (
+                <span
+                  className={`text-[10px] mb-auto font-extrabold px-1.5 py-0.5 rounded shadow-md shadow-violet-300 self-center flex-shrink-0 ${
+                    isHighlight
+                      ? "bg-white text-primary"
+                      : "bg-primary text-white"
+                  }`}
+                >
+                  x4
+                </span>
+              )}
               <span
                 className={`text-sm leading-relaxed ${
                   isHighlight ? "text-white/90" : "text-gray-700"
                 }`}
               >
-                {feature}
+                {feature.text}
               </span>
             </li>
           ))}
@@ -283,7 +294,7 @@ function ReturnToRunCard({ onSelect }: { onSelect: (id: string) => void }) {
                     />
                   </svg>
                   <span className="text-sm leading-relaxed text-white/90">
-                    {feature}
+                    {feature.text}
                   </span>
                 </li>
               ))}
